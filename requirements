@@ -1,0 +1,6 @@
+beautifulsoup4
+django==1.9
+django-filter
+markdown
+simplejson
+spacy

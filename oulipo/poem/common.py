@@ -1,0 +1,10 @@
+PARTS_OF_SPEECH = [
+    'noun',
+    'verb',
+]
+
+CATEGORIES = PARTS_OF_SPEECH + [
+    'punctuation',
+    'new_line',
+    'other',
+]
