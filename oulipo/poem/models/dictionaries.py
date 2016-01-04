@@ -24,6 +24,9 @@ class AlphabeticalDictionary:
         return self.word_list[index]
 
     def advance(self, word, n):
+        if n == 0:
+            return word
+
         if word not in self:
             # TODO: include logic for if the word is not in the dictionary
             return word
