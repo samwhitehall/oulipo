@@ -1,3 +1,4 @@
+# TODO: add docstrings
 import re
 
 import spacy.en
@@ -30,6 +31,13 @@ class Token(object):
             template += ' {self.original_word} -> {self.content}'
 
         return template.format(self=self)
+
+    def replace_word(self, new_word):
+        if self.category not in PARTS_OF_SPEECH:
+            raise Exception('Cannot replace word. Token is not PoS')
+
+        original = self.original_word.strip()
+        self.content = self.original_word.replace(original, new_word)
 
 
 class Poem(object):
@@ -67,3 +75,18 @@ def tokenize(raw_text):
             tokens.append(Token(category, content))
 
     return tokens
+
+
+def advance_and_replace(poem_model, dictionaries):
+    tokens = poem_model.tokens
+    advance_by = poem_model.options.advance_by
+
+    to_replace = [token for token in tokens if token.category in advance_by]
+
+    for token in to_replace:
+        dictionary = dictionaries[token.category]
+        offset = advance_by[token.category]
+        word = token.original_word.strip()
+
+        new_word = dictionary.advance(word, offset)
+        token.replace_word(new_word)
