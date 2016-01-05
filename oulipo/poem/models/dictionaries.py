@@ -35,7 +35,7 @@ class AlphabeticalDictionary:
         return self[index + n]
 
 
-def from_json(name):
+def load(name):
     if not name.endswith('.json'):
         name = name + '.json'
 
