@@ -1,10 +1,9 @@
 # TODO: add docstrings
 import re
 
-import spacy.en
-import spacy.parts_of_speech as pos
 
 from poem.common import PARTS_OF_SPEECH
+from poem.tasks import process_lines
 
 
 class Options(object):
@@ -52,27 +51,11 @@ class Poem(object):
 
 
 def tokenize(raw_text):
-    parts_of_speech = {
-        pos.NOUN: 'noun',
-        pos.VERB: 'verb',
-        pos.PUNCT: 'punctuation',
-    }
-    nlp = spacy.en.English()
-
     raw_text = unicode(raw_text)
     lines = re.split(r'(\n)', raw_text)
-    processed_lines = [nlp(line, tag=True, parse=False) for line in lines]
 
-    tokens = []
-    for line in processed_lines:
-        for token in line:
-            content = token.string
-            category = parts_of_speech.get(token.pos, 'other')
-
-            if '\n' in token.string:
-                category = 'new_line'
-
-            tokens.append(Token(category, content))
+    processed = process_lines.delay(lines).get()
+    tokens = [Token(category, content) for category, content in processed]
 
     return tokens
 
