@@ -4,7 +4,6 @@ from mock import patch
 from poem.models.dictionaries import load as load_dictionary
 from poem.models.words import (
     Poem,
-    Options,
     Token,
     advance_and_replace,
     dictionaries,
@@ -83,7 +82,7 @@ class TestAdvanceReplace(unittest.TestCase):
             Token('other', ' and '),
             Token('noun', 'Dog'),
         ]
-        options = Options(advance_by={'noun': 1})
+        options = {'advance_by': {'noun': 1}}
 
         # don't do advance_and_replace on poem creation (mocked out)
         poem = Poem(raw_text, options, tokens)

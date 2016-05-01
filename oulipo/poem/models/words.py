@@ -12,7 +12,7 @@ dictionaries = {
 
 
 class Options(object):
-    def __init__(self, advance_by):
+    def __init__(self, advance_by=None):
         self.advance_by = advance_by
 
     def __repr__(self):
@@ -47,7 +47,7 @@ class Token(object):
 class Poem(object):
     def __init__(self, raw_text, options, tokens=None):
         self.raw_text = raw_text
-        self.options = options
+        self.options = Options(**options)
 
         if tokens is not None:
             self.tokens = tokens
@@ -69,8 +69,11 @@ def tokenize(raw_text):
 
 def advance_and_replace(poem_model, dictionaries):
     # TODO: return new object rather than mutating
-    tokens = poem_model.tokens
     advance_by = poem_model.options.advance_by
+    if not advance_by:
+        return
+
+    tokens = poem_model.tokens
 
     to_replace = [token for token in tokens if token.category in advance_by]
 

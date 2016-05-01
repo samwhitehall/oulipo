@@ -13,7 +13,7 @@ Token = namedtuple('Token', ['string', 'pos'])
 
 
 def test_tagger(line, tag=None, parse=None):
-    nouns = {'world', 'cat'}
+    nouns = {'World', 'Cat', 'Dog'}
 
     tokens = []
     for word in line.split(' '):
@@ -30,12 +30,12 @@ class TestTokenization(unittest.TestCase):
 
     def test_tokenize(self):
         with patch.dict('poem.tasks._nlp', {'en': test_tagger}):
-            lines = ['hello world and cat']
+            lines = ['hello World and Cat']
             expected = [
                 ('other', 'hello'),
-                ('noun', 'world'),
+                ('noun', 'World'),
                 ('other', 'and'),
-                ('noun', 'cat'),
+                ('noun', 'Cat'),
             ]
             processed = process_lines.delay(lines).get()
 
