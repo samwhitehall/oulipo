@@ -3,7 +3,10 @@ import re
 
 
 from poem.common import PARTS_OF_SPEECH
+from poem.models.dictionaries import load
 from poem.tasks import process_lines
+
+dictionary = load('nouns')
 
 
 class Options(object):
@@ -49,6 +52,8 @@ class Poem(object):
         else:
             self.tokens = tokenize(raw_text)
 
+        advance_and_replace(self, dictionary)
+
 
 def tokenize(raw_text):
     raw_text = unicode(raw_text)
@@ -61,6 +66,7 @@ def tokenize(raw_text):
 
 
 def advance_and_replace(poem_model, dictionaries):
+    # TODO: return new object rather than mutating
     tokens = poem_model.tokens
     advance_by = poem_model.options.advance_by
 
