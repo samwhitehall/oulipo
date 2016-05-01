@@ -4,5 +4,6 @@ django==1.9
 django-filter
 djangorestframework
 markdown
+mock
 simplejson
 spacy

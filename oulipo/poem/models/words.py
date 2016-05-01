@@ -6,7 +6,9 @@ from poem.common import PARTS_OF_SPEECH
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
 
-dictionary = load('nouns')
+dictionaries = {
+    'noun': load('nouns'),
+}
 
 
 class Options(object):
@@ -52,7 +54,7 @@ class Poem(object):
         else:
             self.tokens = tokenize(raw_text)
 
-        advance_and_replace(self, dictionary)
+        advance_and_replace(self, dictionaries)
 
 
 def tokenize(raw_text):
