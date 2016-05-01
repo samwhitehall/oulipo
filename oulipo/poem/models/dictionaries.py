@@ -39,7 +39,7 @@ def load(name):
     if not name.endswith('.json'):
         name = name + '.json'
 
-    path = os.path.join(settings.BASE_DIR, 'poem/data', name)
+    path = os.path.join(settings.BASE_DIR, '../poem/data', name)
     words = json.load(open(path))
 
     return AlphabeticalDictionary(words)
