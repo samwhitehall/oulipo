@@ -34,6 +34,12 @@ class TestTokenModel(unittest.TestCase):
         self.assertEqual(token.content, 'fox')
         self.assertEqual(token.original_word, 'elephant')
 
+    def test_replace_word_preserves_spacing(self):
+        token = Token('noun', '  elephant   ')
+        token.replace_word('fox')
+
+        self.assertEqual(token.content, '  fox   ')
+
     def test_replace_word_non_pos(self):
         token = Token('punctuation', '$')
 
