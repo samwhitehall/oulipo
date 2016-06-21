@@ -1,4 +1,4 @@
-from rest_framework.renderers import JSONRenderer
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -10,9 +10,12 @@ class PoemViewSet(ViewSet):
 
     def create(self, request):
         serializer = PoemModelSerializer(data=request.data)
-        serializer.is_valid()
+        if serializer.is_valid():
+            poem_model = serializer.save()
 
-        serializer.save()
-        json_response = JSONRenderer().render(serializer.data)
+            update_serializer = PoemModelSerializer(poem_model)
+            return Response(update_serializer.data)
 
-        return Response(json_response)
+        else:
+            # TODO: return more than bare status code
+            return Response(status=status.HTTP_400_BAD_REQUEST)

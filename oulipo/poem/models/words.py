@@ -8,25 +8,35 @@ from poem.tasks import process_lines
 
 dictionaries = {
     'noun': load('nouns'),
+    'verb': load('verbs'),
 }
 
 
 class Options(object):
-    def __init__(self, advance_by=None):
-        self.advance_by = advance_by
+    def __init__(self, advance_by__noun=0, advance_by__verb=0):
+        self.advance_by__noun = advance_by__noun
+        self.advance_by__verb = advance_by__verb
+
+        self.advance_by = {
+            'noun': self.advance_by__noun,
+            'verb': self.advance_by__verb,
+        }
 
     def __repr__(self):
         return repr(self.advance_by)
 
 
 class Token(object):
-    def __init__(self, category, content=None):
+    def __init__(self, category, original_word=None, content=None):
         self.category = category
 
         if content is not None:
             self.content = content
 
-        if category in PARTS_OF_SPEECH:
+        if original_word is not None:
+            self.original_word = original_word
+
+        if category in PARTS_OF_SPEECH and original_word is None:
             self.original_word = self.content
 
     def __repr__(self):
@@ -50,7 +60,7 @@ class Poem(object):
         self.options = Options(**options)
 
         if tokens is not None:
-            self.tokens = tokens
+            self.tokens = [Token(**token) for token in tokens]
         else:
             self.tokens = tokenize(raw_text)
 
