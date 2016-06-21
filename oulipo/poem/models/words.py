@@ -59,7 +59,7 @@ class Poem(object):
         self.raw_text = raw_text
         self.options = Options(**options)
 
-        if tokens is not None:
+        if tokens:
             self.tokens = [Token(**token) for token in tokens]
         else:
             self.tokens = tokenize(raw_text)
@@ -72,7 +72,8 @@ def tokenize(raw_text):
     lines = re.split(r'(\n)', raw_text)
 
     processed = process_lines.delay(lines).get()
-    tokens = [Token(category, content) for category, content in processed]
+    tokens = [Token(category, content=content)
+              for category, content in processed]
 
     return tokens
 

@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from celery import current_app
@@ -23,13 +22,11 @@ class TestApiEndpoint(unittest.TestCase):
 
         text = 'hello Cat i am a Dog'
         options = {
-            'advance_by': {
-                'noun': 1,
-            },
+            'advance_by__noun': 1,
         }
 
         request = api.post('/poems/', {
-            'raw_text':  text,
+            'raw_text': text,
             'options': options,
         }, format='json')
 
@@ -38,13 +35,16 @@ class TestApiEndpoint(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        decoded = json.loads(response.data)
-        self.assertEqual(decoded['raw_text'], text)
-        self.assertEqual(decoded['options'], options)
+        self.assertEqual(response.data['raw_text'], text)
+        self.assertEqual(response.data['options'], {
+            'advance_by__noun': 1,
+            'advance_by__verb': 0,  # not specified => default to 0
+        })
 
         expected_new_text = 'hello Dog i am a Elephant'.replace(' ', '')
-        new_text = ''.join(token['content'] for token in decoded['tokens'])
+        new_text = ''.join(token['content']
+                           for token in response.data['tokens'])
         self.assertEqual(new_text, expected_new_text)
 
-        self.assertEqual(decoded['tokens'][1]['original_word'], 'Cat')
-        self.assertEqual(decoded['tokens'][-1]['original_word'], 'Dog')
+        self.assertEqual(response.data['tokens'][1]['original_word'], 'Cat')
+        self.assertEqual(response.data['tokens'][-1]['original_word'], 'Dog')

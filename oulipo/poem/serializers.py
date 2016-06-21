@@ -14,8 +14,8 @@ class TokenSerializer(serializers.Serializer):
 
 
 class OptionsSerializer(serializers.Serializer):
-    advance_by__noun = serializers.IntegerField()
-    advance_by__verb = serializers.IntegerField()
+    advance_by__noun = serializers.IntegerField(required=False)
+    advance_by__verb = serializers.IntegerField(required=False)
     # TODO: advanced options
 
 
