@@ -1,19 +1,48 @@
-(function ($, Backbone, _, app) {
-    var TemplateView = Backbone.View.extend({
-        initialize: function () {
-            this.template = _.template($(this.templateName).html());
-        },
+app.views.OptionsView = Backbone.View.extend({
+    el: '#options',
+    template: _.template($('#options-template').html()),
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    },
+    events: {
+        'click .update': 'update'
+    },
+    update: function(e) {
+        options = app.poem.get('options');
 
-        render: function () {
-            html = this.template();
-            this.$el.html(html);
-        }
-    });
+        noun = this.$('#advance_by__noun').val();
+        verb = this.$('#advance_by__verb').val();
 
-    var HomeView = TemplateView.extend({
-        tagName: 'div',
-        templateName: '#new-poem'
-    })
+        options.set('advance_by__noun', noun);
+        options.set('advance_by__verb', verb);
 
-    app.views.HomeView = HomeView;
-})(jQuery, Backbone, _, app);
+        app.poem.save(app.poem.toJSON(), {
+            wait: true
+        });
+    }
+});
+
+app.views.TokenView = Backbone.View.extend({
+    tagName: 'li', 
+    template: _.template($('#token-template').html()),
+    render: function() {
+        this.$el.html(this.template(this.model));
+        return this;
+    }
+});
+
+app.views.PoemView = Backbone.View.extend({
+    el: '#poem',
+    addToken: function(token) {
+        var view = new app.views.TokenView({model: token});
+        $('#token-list').append(view.render().el);
+    },
+    reset: function() {
+        this.$('#token-list').html('');
+        tokens = app.poem.get('tokens');
+        tokens.forEach(this.addToken, this);
+    }
+});
+

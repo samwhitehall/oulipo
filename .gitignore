@@ -20,3 +20,9 @@ __pycache__/
 # other directories
 env
 scratch
+
+
+# frontend
+oulipo/frontend/node_modules
+oulipo/frontend/oulipo.js  # compiled JS file
+oulipo/frontend/oulipo.min.js  # compiled JS file
