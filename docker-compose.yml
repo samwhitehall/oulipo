@@ -1,5 +1,15 @@
 version: '2'
 services:
+    dev:
+        image: python:2.7
+        volumes:
+            - ./oulipo/frontend:/html
+        working_dir: /html
+        command: "python -m SimpleHTTPServer 8888"    
+        ports:
+            - "8888:8888"
+        depends_on:
+            - api
     api:
         build: .
         command: "python manage.py runserver 0.0.0.0:8000"
