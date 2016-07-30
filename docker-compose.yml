@@ -1,0 +1,14 @@
+version: '2'
+services:
+    celery:
+        build: .
+        image: celery:3.1
+        command: "celery -A oulipo worker --loglevel=info"
+        volumes:
+            - .:/code
+        depends_on:
+            - rabbitmq
+        links:
+            - rabbitmq:rabbitmq
+    rabbitmq:
+        image: rabbitmq:3.6

@@ -80,7 +80,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Celery settings
-BROKER_URL = 'amqp://guest@localhost//'
+BROKER_URL = 'amqp://guest@rabbitmq//'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
