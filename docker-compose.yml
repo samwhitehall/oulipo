@@ -1,13 +1,16 @@
 version: '2'
 services:
+    api:
+        build: .
+        command: "python manage.py runserver 0.0.0.0:8000"
+        ports:
+            - "8000:8000"
+        depends_on:
+            - celery
     celery:
         build: .
         image: celery:3.1
         command: "celery -A oulipo worker --loglevel=info"
-        volumes:
-            - .:/code
-        depends_on:
-            - rabbitmq
         links:
             - rabbitmq:rabbitmq
     rabbitmq:
