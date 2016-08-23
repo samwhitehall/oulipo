@@ -11,7 +11,7 @@
         <header id="options"></header>
         <section id="poem">
             <h3>Poem</h3>
-            <ul id="token-list"></ul>
+            <div id="token-list"></div>
         </section>
     </section>
 
@@ -27,9 +27,7 @@
     </script>
 
     <script type="text/template" id="token-template">
-        <a href="#" class="edit-button">(edit)</a>
-        <span class="<%- category %>"><%- content %></span>
-        <span class="edit-panel">boo</span>
+        <%- content %>
     </script>
 
     <script src="oulipo.js" type="text/javascript"></script>  

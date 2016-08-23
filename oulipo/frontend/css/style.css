@@ -1,5 +1,9 @@
-#token-list li {
+#token-list {
     font-size: 24px;
+}
+
+.token {
+    display: inline;
 }
 
 .noun {

@@ -25,10 +25,12 @@ app.views.OptionsView = Backbone.View.extend({
 });
 
 app.views.TokenView = Backbone.View.extend({
-    tagName: 'li', 
+    tagName: 'span', 
+    className: 'token',
     template: _.template($('#token-template').html()),
     render: function() {
         this.$el.html(this.template(this.model));
+        this.$el.addClass(this.model.category);
         return this;
     }
 });
