@@ -1,3 +1,20 @@
+body {
+    background-color: #efefef;
+}
+
+#options {
+    padding: 12px 24px;
+    background-color: #ccc;
+
+}
+
+#poem {
+    margin: 24px 240px;
+    padding: 12px 24px;
+
+    background: #fff;
+}
+
 #token-list {
     font-size: 24px;
 }
@@ -17,7 +34,7 @@
 }
 
 .other {
-    color: gray;
+    color: #222;
 }
 
 .new_line {
