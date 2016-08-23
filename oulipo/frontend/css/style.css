@@ -20,6 +20,10 @@
     color: gray;
 }
 
+.new_line {
+    display: block;
+}
+
 a:link.edit-button, a:visited.edit-button {
     margin-left: 5px;
 
