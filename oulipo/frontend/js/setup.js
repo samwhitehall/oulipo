@@ -14,5 +14,4 @@ app.optionsView = new app.views.OptionsView({
 app.poem.on('sync', app.poemView.reset, app.poemView);
 app.poem.on('sync', app.optionsView.render, app.optionsView);
 
-app.optionsView.render();
-app.poemView.reset();
+app.poem.save();
