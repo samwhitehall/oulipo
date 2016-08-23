@@ -3,7 +3,9 @@ app.poem = new app.models.Poem({
         'advance_by__verb': 0,    
         'advance_by__noun': 0    
     },
-    'raw_text': 'hello cat i am a dog',
+    'raw_text': 'she came from Greece, she had a thirst for knowledge,\n' +
+                'she studied sculpture at St Martin\'s College,\n' +
+                'that\'s where I caught her eye'
 });
 
 app.poemView = new app.views.PoemView();
