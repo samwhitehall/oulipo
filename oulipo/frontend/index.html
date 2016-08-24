@@ -45,10 +45,22 @@
     <!-- Templates -->
     <script type="text/template" id="options-template">
         <label>nouns: </label>
-        <input id="advance_by__noun" value="<%- advance_by__noun %>">
+        <input 
+            type="range"
+            min="-10"
+            max="10"
+            id="advance_by__noun" 
+            value="<%- advance_by__noun %>"
+        >
 
         <label>verbs: </label>
-        <input id="advance_by__verb" value="<%- advance_by__verb %>">
+        <input 
+            type="range"
+            min="-10"
+            max="10"
+            id="advance_by__verb" 
+            value="<%- advance_by__verb %>"
+        >
 
         <button class="update">update</button>
     </script>
