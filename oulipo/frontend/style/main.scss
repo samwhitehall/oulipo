@@ -47,6 +47,11 @@ body {
     background-color: $background;
 }
 
+
+.dot {
+    color: $highlight;
+}
+
 #poem {
     border-bottom: 1px solid $subtle-hint;
 }
@@ -72,8 +77,6 @@ body {
 a:link.edit-button, a:visited.edit-button {
     margin-left: 5px;
 
-    color: teal;
-    font-size: 12px;
     text-decoration: none;
     border-bottom: 1px dotted teal;
 }
