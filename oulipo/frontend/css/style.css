@@ -44,6 +44,11 @@ table {
 }
 
 /* structure */
+header {
+    padding: 12px 24px;
+    text-align: center;
+}
+
 #options {
     padding: 12px 24px;
     text-align: center;
@@ -64,11 +69,18 @@ table {
 
 /* styling */
 body {
-    background-color: #efefef;
+    background-color: #f4f4f4;
+    background-image: url(https://www.transparenttextures.com/patterns/back-pattern.png);
+}
+
+header {
+    background-color: white;
+    border-bottom: 3px solid #000;
+    color: #000;
 }
 
 #options {
-    background-color: #ccc;
+    background-color: #fff;
 }
 
 #poem {
@@ -76,12 +88,12 @@ body {
 }
 
 .noun {
-    color: red;
+    color: #e24e24;
     font-weight: bold;
 }
 
 .verb {
-    color: blue;
+    color: #e9b000;
     font-weight: bold;
 }
 
