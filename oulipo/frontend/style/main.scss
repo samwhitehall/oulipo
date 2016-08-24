@@ -4,24 +4,43 @@
 
 /* structure */
 header {
+    margin-left: auto;
+    margin-right: auto;
     padding-top: 2rem;
     padding-bottom: 1rem;
     text-align: center;
+
+    #centered-heading {
+        display: inline-block;
+    }
 }
 
 #options {
+    width: $width/2;
+    margin-left: auto;
+    margin-right: auto;
     padding-top: 1rem;
     padding-bottom: 2rem;
     text-align: center;
+
+    input[type="range"] {
+        width: 100%;
+    }
 }
 
 #poem-header {
-    width: 500px;
+    width: $width;
     margin-top: 1rem;
     margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
     padding-top: 1rem;
+}
+
+.option-slider {
+    label {
+        display: block;
+    }
 }
 
 #edit {
@@ -31,7 +50,7 @@ header {
 }
 
 #poem {
-    width: 500px;
+    width: $width;
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;

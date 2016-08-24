@@ -9,24 +9,26 @@
 </head>
 <body>
     <header>
-        <h1 class="page-title">
-        O
-        <span class="dot">&middot;</span>
-        U
-        <span class="dot">&middot;</span>
-        L
-        <span class="dot">&middot;</span>
-        I
-        <span class="dot">&middot;</span>
-        P
-        <span class="dot">&middot;</span>
-        O
-        </h1>
+        <section id="centered-heading">
+            <h1 class="page-title">
+            O
+            <span class="dot">&middot;</span>
+            U
+            <span class="dot">&middot;</span>
+            L
+            <span class="dot">&middot;</span>
+            I
+            <span class="dot">&middot;</span>
+            P
+            <span class="dot">&middot;</span>
+            O
+            </h1>
+            <section id="options" class="options-text"></section>
+        </section>
     </header>
 
 
     <section id="poem-view">
-        <section id="options" class="options-text"></section>
         <div id="poem-header">
             <h3 id="edit" class="options-text">
                 <a href="#">edit</a>
@@ -44,23 +46,29 @@
 
     <!-- Templates -->
     <script type="text/template" id="options-template">
-        <label for="advance_by__noun">nouns:</label>
-        <input 
-            type="range"
-            min="-10"
-            max="10"
-            id="advance_by__noun" 
-            value="<%- advance_by__noun %>"
-        >
+        <div class="option-slider">
+            <label for="advance_by__noun">nouns:</label>
+            <input 
+                type="range"
+                min="-10"
+                max="10"
+                step="1"
+                id="advance_by__noun" 
+                value="<%- advance_by__noun %>"
+            > 
+        </div>
 
-        <label for="advance_by__verb">verbs:</label>
-        <input 
-            type="range"
-            min="-10"
-            max="10"
-            id="advance_by__verb" 
-            value="<%- advance_by__verb %>"
-        >
+        <div class="option-slider">
+            <label for="advance_by__verb">verbs:</label>
+            <input 
+                type="range"
+                min="-10"
+                max="10"
+                step="1"
+                id="advance_by__verb" 
+                value="<%- advance_by__verb %>"
+            >
+        </div>
 
         <button class="update">update</button>
     </script>
