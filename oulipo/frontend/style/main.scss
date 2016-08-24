@@ -5,13 +5,13 @@
 /* structure */
 header {
     padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
     text-align: center;
 }
 
 #options {
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     text-align: center;
 }
 
@@ -22,6 +22,12 @@ header {
     margin-left: auto;
     margin-right: auto;
     padding-top: 1rem;
+}
+
+#edit {
+    width: 100px;
+    float: right;
+    text-align: right;
 }
 
 #poem {
