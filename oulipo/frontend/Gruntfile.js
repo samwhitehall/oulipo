@@ -30,6 +30,13 @@ module.exports = function(grunt) {
                 dest: 'oulipo.js'
             }
         },
+
+        // sass compilation
+        sass: {
+            dist: {
+                files: {'style/main.css': 'style/main.scss'}
+            }
+        },
         
         // configure watch for auto-updating
         watch: {
@@ -44,6 +51,7 @@ module.exports = function(grunt) {
     // load grunt plugins
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // register tasks

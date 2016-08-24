@@ -26,3 +26,7 @@ scratch
 oulipo/frontend/node_modules
 oulipo/frontend/oulipo.js
 oulipo/frontend/oulipo.min.js
+
+oulipo/frontend/.sass-cache/
+oulipo/frontend/style/main.css
+oulipo/frontend/style/main.css.map
