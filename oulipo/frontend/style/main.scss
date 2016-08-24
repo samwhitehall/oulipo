@@ -44,35 +44,25 @@ header {
 
 /* styling */
 body {
-    background-color: white;
-}
-
-header {
-    background-color: white;
-    color: #000;
-}
-
-#options {
-    background-color: #fff;
+    background-color: $background;
 }
 
 #poem {
-    background: #fff;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $subtle-hint;
 }
 
 .noun {
-    color: #e24e24;
+    color: $highlight-noun;
     font-weight: bold;
 }
 
 .verb {
-    color: #e9b000;
+    color: $highlight-verb;
     font-weight: bold;
 }
 
 .other {
-    color: #222;
+    color: $highlight-other;
 }
 
 .new_line {
