@@ -1,71 +1,45 @@
-/* css reset */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-body {
-    line-height: 1;
-}
-ol, ul {
-    list-style: none;
-}
-blockquote, q {
-    quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content: '';
-    content: none;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
+@import "reset";
+@import "common";
+
 
 /* structure */
 header {
-    padding: 12px 24px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     text-align: center;
 }
 
 #options {
-    padding: 12px 24px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     text-align: center;
+}
+
+#poem-header {
+    width: 500px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1rem;
 }
 
 #poem {
     width: 500px;
-    margin: 24px auto; 
-    padding: 12px 24px;
-}
-
-#token-list {
-    font-size: 18px;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 
 .token {
     display: inline;
+}
+
+#author {
+    margin-top: 0.5rem;
+    text-align: right;
 }
 
 /* styling */
@@ -75,17 +49,16 @@ body {
 
 header {
     background-color: white;
-    border-bottom: 2px solid #eee;
     color: #000;
 }
 
 #options {
     background-color: #fff;
-    border-bottom: 2px solid #eee;
 }
 
 #poem {
     background: #fff;
+    border-bottom: 1px solid #eee;
 }
 
 .noun {

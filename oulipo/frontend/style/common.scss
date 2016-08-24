@@ -1,0 +1,47 @@
+/* typographic baseline */
+/* ~> https://scotch.io/tutorials/aesthetic-sass-3-typography-and-vertical-rhythm */
+
+$base-font-size: 1rem;
+$base-line-height: $base-font-size * 1.25;
+
+$type-scale: (
+    -1: 0.75rem,  // small text
+    0: 1rem,      // body text
+    1: 1.333rem,  // large text
+    2: 1.777rem   // main heading
+);
+
+@function type-scale($level) {
+  @return map-get($type-scale, $level);
+}
+
+@mixin type-setting($level: 0) {
+    font-size: type-scale($level);
+    line-height: line-height($level);
+}
+
+/* colour */
+
+
+/* typography */
+.page-title {
+    @include type-setting(1);
+    font-family: "Lato", "Verdana" sans-serif;
+}
+
+.options-text {
+    @include type-setting(-1);
+    font-family: "Lato", "Verdana", sans-serif;
+    text-transform: uppercase;
+}
+
+.poem-title {
+    @include type-setting(2);
+    font-family: "Lato", "Verdana", sans-serif;
+}
+
+body {
+    @include type-setting(0);
+    font-family: "Lato", "Verdana", sans-serif;
+    line-height: 1.5rem;
+}
