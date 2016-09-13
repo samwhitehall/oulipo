@@ -3,7 +3,20 @@ app.views.OptionsView = Backbone.View.extend({
     template: _.template($('#options-template').html()),
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-        this.$el.html(this.template(this.model.toJSON()));
+
+        /* add tooltip label to advance_by sliders */
+        this.$('input[type="range"]').on('input', function() {
+            var el = $(this);
+            var outputElem = el.prev('output');
+            
+            var value = el.val();
+            if (value > 0) {
+                value = '+' + value;
+            }
+
+            outputElem.text(value);
+        });
+
         return this;
     },
     events: {

@@ -72,9 +72,33 @@ body {
     background-color: $background;
 }
 
-
 .dot {
     color: $subtle-hint;
+}
+
+.option-slider label {
+    display: inline; 
+}
+
+output {
+    display: inline-block;
+    width: 30px;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+
+    border: 1px solid $subtle-hint;
+    border-radius: 12px;
+}
+
+output.noun {
+    background-color: $highlight-noun;
+    color: $background;
+}
+
+output.verb {
+    background-color: $highlight-verb;
+    color: $background;
 }
 
 #poem {
