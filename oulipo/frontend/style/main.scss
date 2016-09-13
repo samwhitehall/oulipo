@@ -88,7 +88,8 @@ output {
     text-align: center;
 
     border: 1px solid $subtle-hint;
-    border-radius: 12px;
+    border-radius: 4px;
+    opacity: 0.75;
 }
 
 output.noun {
