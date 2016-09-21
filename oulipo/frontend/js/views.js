@@ -3,37 +3,31 @@ app.views.OptionsView = Backbone.View.extend({
     template: _.template($('#options-template').html()),
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-
-        /* add tooltip label to advance_by sliders */
-        this.$('input[type="range"]').on('input', function() {
-            var el = $(this);
-            var outputElem = el.prev('output');
-            
-            var value = el.val();
-            if (value > 0) {
-                value = '+' + value;
-            }
-
-            outputElem.text(value);
-        });
-
         return this;
     },
     events: {
-        'click .update': 'update'
+        'input input[type="range"]': 'update'
     },
     update: function(e) {
-        options = app.poem.get('options');
-
-        noun = this.$('#advance_by__noun').val();
-        verb = this.$('#advance_by__verb').val();
-
-        options.set('advance_by__noun', noun);
-        options.set('advance_by__verb', verb);
+        this.setAdvanceBy(e.target.id);
 
         app.poem.save(app.poem.toJSON(), {
             wait: true
         });
+    },
+    setAdvanceBy: function(parameter) {
+        var inputElem = this.$('#' + parameter);
+        var outputElem = inputElem.prev('output');
+
+        var amount = inputElem.val();
+
+        var options = app.poem.get('options');
+        options.set(parameter, amount);
+
+        if (amount > 0) {
+            amount = '+' + amount;
+        }
+        outputElem.text(amount);
     }
 });
 
