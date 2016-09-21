@@ -39,11 +39,33 @@ app.views.TokenView = Backbone.View.extend({
         this.$el.html(this.template(this.model));
         this.$el.addClass(this.model.category);
         return this;
+    },
+    events: {
+        'click': 'select'
+    },
+    select: function(e) {
+        var currentlySelected = (app.poemView.selectedToken === this);
+        app.poemView.deselectCurrent();
+
+        if (currentlySelected)
+            return;
+
+        app.poemView.selectedToken = this;
+        e.stopPropagation();  // don't bubble to background (and deselect)
+
+        var tray = new app.views.SelectedTokenTrayView();
+        this.$el.append(tray.template({}));
     }
 });
 
+app.views.SelectedTokenTrayView = Backbone.View.extend({
+    el: '#tray',
+    template: _.template($('#selected-token-tray-template').html()),
+});
+
 app.views.PoemView = Backbone.View.extend({
-    el: '#poem',
+    el: '#poem-view',
+    selectedToken: null,
     addToken: function(token) {
         var view = new app.views.TokenView({model: token});
         $('#token-list').append(view.render().el);
@@ -52,6 +74,12 @@ app.views.PoemView = Backbone.View.extend({
         this.$('#token-list').html('');
         tokens = app.poem.get('tokens');
         tokens.forEach(this.addToken, this);
+    },
+    deselectCurrent: function(e) {
+        if (this.selectedToken !== null)
+            $('#tray').remove();
+        
+        this.selectedToken = null;
     }
 });
 
