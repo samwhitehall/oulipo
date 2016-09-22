@@ -44,7 +44,7 @@ app.views.TokenView = Backbone.View.extend({
         'click': 'select'
     },
     select: function(e) {
-        var currentlySelected = (app.poemView.selectedToken === this);
+        var currentlySelected = (app.poemView.selectedToken === this.model);
         app.poemView.deselectCurrent();
 
         if (currentlySelected)
