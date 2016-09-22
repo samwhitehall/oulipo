@@ -53,14 +53,24 @@ app.views.TokenView = Backbone.View.extend({
         app.poemView.selectedToken = this;
         e.stopPropagation();  // don't bubble to background (and deselect)
 
-        var tray = new app.views.SelectedTokenTrayView();
-        this.$el.append(tray.template({}));
+        var tray = new app.views.SelectedTokenTrayView({model: this.model});
+        this.$el.append(tray.render().el);
     }
 });
 
 app.views.SelectedTokenTrayView = Backbone.View.extend({
-    el: '#tray',
+    tagName: 'span',
+    id: 'tray',
     template: _.template($('#selected-token-tray-template').html()),
+    render: function() {
+        this.$el.html(this.template(this.model));
+
+        // disable button for current type
+        var elemName = '.' + this.model.category;
+        this.$el.find(elemName).attr('disabled', true);
+        
+        return this;
+    },
 });
 
 app.views.PoemView = Backbone.View.extend({
