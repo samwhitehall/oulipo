@@ -23,4 +23,10 @@ $(document).on('keypress', function(e) {
         app.poemView.deselectCurrent(); 
 }); 
 
+// exit edit mode without saving
+$(document).on('keypress', function(e) { 
+    if (e.keyCode == 27)  // escape key
+        app.poemView.exitEditMode(); 
+}); 
+
 app.poem.save();

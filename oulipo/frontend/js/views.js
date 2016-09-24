@@ -84,6 +84,10 @@ app.views.SelectedTokenTrayView = Backbone.View.extend({
 
 app.views.PoemView = Backbone.View.extend({
     el: '#poem-view',
+    events: {
+        'click #edit': 'toggleEdit'
+    },
+    editMode: false,
     selectedToken: null,
     addToken: function(token) {
         var view = new app.views.TokenView({model: token});
@@ -98,6 +102,7 @@ app.views.PoemView = Backbone.View.extend({
         $tokenListEl.html(cleanedHTML);
     },
     reset: function() {
+        this.$('#edit a').html('edit');
         this.$('#token-list').html('');
         tokens = app.poem.get('tokens');
         tokens.forEach(this.addToken, this);
@@ -107,6 +112,33 @@ app.views.PoemView = Backbone.View.extend({
             $('#tray').remove();
         
         this.selectedToken = null;
+    },
+    toggleEdit: function(e) {
+        app.poemView.deselectCurrent();
+        app.poemView.editMode = !app.poemView.editMode;
+
+        if (app.poemView.editMode) {
+            var height = $('#token-list').height();
+
+            var textArea = document.createElement('textarea');
+            textArea.id = 'raw-text';
+            $(textArea).height(height);
+            $(textArea).html(app.poem.get('raw_text'));
+
+            this.$('#token-list').html(textArea);
+            this.$('#edit a').html('save');
+        }
+        else {
+            var rawText = $('#raw-text').val();
+            app.poem.set('raw_text', rawText);
+            app.poem.unset('tokens');
+            app.poem.save({wait: true});
+        }
+    },
+    exitEditMode: function(e) {
+        if (app.poemView.editMode)
+            app.poemView.editMode = false;
+            app.poemView.reset();
     }
 });
 

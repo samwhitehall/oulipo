@@ -56,7 +56,7 @@ $highlight-other: $body;
     font-family: "Lato", "Verdana", sans-serif;
 }
 
-body {
+body, textarea {
     @include type-setting(0);
     font-family: "Lato", "Verdana", sans-serif;
     line-height: 1.5rem;
