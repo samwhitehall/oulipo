@@ -106,6 +106,8 @@ app.views.PoemView = Backbone.View.extend({
         this.$('#token-list').html('');
         tokens = app.poem.get('tokens');
         tokens.forEach(this.addToken, this);
+
+        this.$('#poem-title').html('<h2>' + app.poem.get('title') + '</h2>');
     },
     deselectCurrent: function(e) {
         if (this.selectedToken !== null)
@@ -127,11 +129,21 @@ app.views.PoemView = Backbone.View.extend({
 
             this.$('#token-list').html(textArea);
             this.$('#edit a').html('save');
+
+            var titleInput = document.createElement('input');
+            titleInput.type = 'text';
+            titleInput.value = app.poem.get('title');
+            this.$('#poem-title').html(titleInput);
         }
         else {
+            var title = $('#poem-title input').val();
             var rawText = $('#raw-text').val();
+
+            app.poem.set('title', title);
             app.poem.set('raw_text', rawText);
             app.poem.unset('tokens');
+            
+
             app.poem.save({wait: true});
         }
     },

@@ -15,6 +15,7 @@ app.models.Token = Backbone.Model.extend({
 app.models.Poem = Backbone.DeepModel.extend({
     url: 'http://localhost:8000/poem/',
     defaults: {
+        title: '',
         raw_text: '',
         options: new app.models.Options(),
         tokens: []

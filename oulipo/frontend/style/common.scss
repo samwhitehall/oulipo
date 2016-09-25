@@ -22,6 +22,8 @@ $type-scale: (
 
 /* general */
 $width: 500px;
+$edit-width: 50px;
+$border: 1px;
 
 /* colour */
 $background: #fefffe;
@@ -51,7 +53,7 @@ $highlight-other: $body;
     text-transform: uppercase;
 }
 
-.poem-title {
+#poem-title, #poem-title input {
     @include type-setting(2);
     font-family: "Lato", "Verdana", sans-serif;
 }

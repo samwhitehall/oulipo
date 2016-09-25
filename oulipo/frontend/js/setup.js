@@ -1,4 +1,5 @@
 app.poem = new app.models.Poem({
+    'title': 'Common People',
     'options': {
         'advance_by__verb': 0,    
         'advance_by__noun': 0    
