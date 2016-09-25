@@ -50,16 +50,18 @@ class TestPoemModel(unittest.TestCase):
     @patch('poem.models.words.tokenize')
     @patch('poem.models.words.advance_and_replace')
     def test_initial_not_yet_tokenised(self, mock_advance, mock_tokenize):
+        title = 'My Wonderful Poem'
         raw_text = 'Hello world.'
         options = {}
 
-        poem = Poem(raw_text, options)
+        poem = Poem(title, raw_text, options)
 
         mock_tokenize.assert_called_with(raw_text)
         mock_advance.assert_called_with(poem, dictionaries)
 
     @patch('poem.models.words.advance_and_replace')
     def test_subsequent_already_tokenised(self, mock_advance):
+        title = 'My Wonderful Poem'
         raw_text = 'Hello world.'
         options = {}
         tokens = [
@@ -68,7 +70,7 @@ class TestPoemModel(unittest.TestCase):
             {'category': 'punctuation', 'content': '.'},
         ]
 
-        poem = Poem(raw_text, options, tokens)
+        poem = Poem(title, raw_text, options, tokens)
 
         mock_advance.assert_called_with(poem, dictionaries)
 
@@ -76,6 +78,7 @@ class TestPoemModel(unittest.TestCase):
 class TestAdvanceReplace(unittest.TestCase):
     @patch('poem.models.words.advance_and_replace')
     def test_advance_replace(self, mock_advance):
+        title = 'My Wonderful Poem'
         raw_text = 'Cat and Dog'
         tokens = [
             {'category': 'noun', 'content': 'Cat'},
@@ -85,7 +88,7 @@ class TestAdvanceReplace(unittest.TestCase):
         options = {'advance_by__noun': 1}
 
         # don't do advance_and_replace on poem creation (mocked out)
-        poem = Poem(raw_text, options, tokens)
+        poem = Poem(title, raw_text, options, tokens)
 
         test_dictionaries = {
             'noun': load_dictionary('test'),

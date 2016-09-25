@@ -55,7 +55,8 @@ class Token(object):
 
 
 class Poem(object):
-    def __init__(self, raw_text, options, tokens=None):
+    def __init__(self, title, raw_text, options, tokens=None):
+        self.title = title
         self.raw_text = raw_text
         self.options = Options(**options)
 

@@ -26,6 +26,7 @@ class TestApiEndpoint(unittest.TestCase):
         }
 
         request = api.post('/poems/', {
+            'title': 'my brilliant poem',
             'raw_text': text,
             'options': options,
         }, format='json')

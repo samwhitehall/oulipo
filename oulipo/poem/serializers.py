@@ -20,6 +20,7 @@ class OptionsSerializer(serializers.Serializer):
 
 
 class PoemModelSerializer(serializers.Serializer):
+    title = serializers.CharField(trim_whitespace=False, allow_blank=True)
     raw_text = serializers.CharField(trim_whitespace=False, allow_blank=True)
     options = OptionsSerializer()
     tokens = TokenSerializer(required=False, many=True)
