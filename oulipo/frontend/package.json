@@ -1,0 +1,14 @@
+{
+  "name": "frontend",
+  "description": "",
+  "author": "Sam Whitehall",
+  "version": "1.0.0",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "jshint-stylish": "^2.2.1"
+  }
+}
