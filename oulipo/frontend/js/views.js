@@ -78,7 +78,15 @@ app.views.PoemView = Backbone.View.extend({
     selectedToken: null,
     addToken: function(token) {
         var view = new app.views.TokenView({model: token});
-        $('#token-list').append(view.render().el);
+        var $tokenListEl = $('#token-list');
+        $tokenListEl.append(view.render().el);
+
+        // Remove any spaces between the HTML tags
+        var cleanedHTML = $tokenListEl.html()
+            .replace('\s*', '')
+            .replace('\>\<', '> <')
+            ;
+        $tokenListEl.html(cleanedHTML);
     },
     reset: function() {
         this.$('#token-list').html('');
