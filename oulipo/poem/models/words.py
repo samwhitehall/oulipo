@@ -42,7 +42,7 @@ class Token(object):
     def __repr__(self):
         template = '({self.category})'
         if hasattr(self, 'original_word'):
-            template += ' {self.original_word} -> {self.content}'
+            template += ' "{self.original_word}" -> "{self.content}"'
 
         return template.format(self=self)
 
