@@ -95,10 +95,7 @@ app.views.PoemView = Backbone.View.extend({
         $tokenListEl.append(view.render().el);
 
         // Remove any spaces between the HTML tags
-        var cleanedHTML = $tokenListEl.html()
-            .replace('\s*', '')
-            .replace('\>\<', '> <')
-            ;
+        var cleanedHTML = $tokenListEl.html().replace('> <', '><');
         $tokenListEl.html(cleanedHTML);
     },
     reset: function() {
