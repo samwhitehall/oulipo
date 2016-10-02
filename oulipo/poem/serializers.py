@@ -10,7 +10,8 @@ class TokenSerializer(serializers.Serializer):
     category = serializers.ChoiceField(choices=CATEGORIES)
     content = serializers.CharField(
         trim_whitespace=False, allow_blank=True, required=False)
-    original_word = serializers.CharField(required=False)
+    original_word = serializers.CharField(
+        required=False, trim_whitespace=False)
 
 
 class OptionsSerializer(serializers.Serializer):
