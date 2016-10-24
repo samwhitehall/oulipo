@@ -1,5 +1,8 @@
+import math
 import os.path
 import simplejson as json
+
+from bisect import bisect
 
 
 from django.conf import settings
@@ -23,16 +26,27 @@ class AlphabeticalDictionary:
 
         return self.word_list[index]
 
+    def find(self, word):
+        if word in self.index:
+            return self.index[word]
+
+        insert_index = bisect(self.word_list, word)
+        return insert_index - 0.5
+
     def advance(self, word, n):
         if n == 0:
             return word
 
-        if word not in self:
-            # TODO: include logic for if the word is not in the dictionary
-            return word
+        index = self.find(word)
 
-        index = self.index[word]
-        return self[index + n]
+        # if we have a fractional index, advance up and down to nearest
+        # integer
+        if n < 0:
+            new_index = int(math.ceil(index + n))
+        else:
+            new_index = int(math.floor(index + n))
+
+        return self[new_index]
 
 
 def load(name):

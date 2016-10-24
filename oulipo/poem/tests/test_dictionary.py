@@ -28,6 +28,12 @@ class TestDictionary(unittest.TestCase):
         self.assertEqual(self.dictionary[-2], 'Aardvark')  # first item
         self.assertEqual(self.dictionary[50], 'Elephant')  # last item
 
+    def test_find(self):
+        self.assertEqual(self.dictionary.find('Cat'), 2)
+        self.assertEqual(self.dictionary.find('Catamaran'), 2.5)
+        self.assertEqual(self.dictionary.find('Caterpillar'), 2.5)
+        self.assertEqual(self.dictionary.find('Dog'), 3)
+
     def test_advance_by_zero(self):
         word = self.dictionary.advance('Butterfly', 0)
         self.assertEqual(word, 'Butterfly')
@@ -46,13 +52,18 @@ class TestDictionary(unittest.TestCase):
         under = self.dictionary.advance('Butterfly', -4)
         self.assertEqual(under, 'Aardvark')
 
-    @unittest.expectedFailure
     def test_advance_missing_word(self):
         word = self.dictionary.advance('Chimpanzee', 1)
         self.assertEqual(word, 'Dog')
 
         word = self.dictionary.advance('Chimpanzee', -1)
         self.assertEqual(word, 'Cat')
+
+        word = self.dictionary.advance('Chimpanzee', 2)
+        self.assertEqual(word, 'Elephant')
+
+        word = self.dictionary.advance('Chimpanzee', -2)
+        self.assertEqual(word, 'Butterfly')
 
 
 class TestDictionaryLoader(unittest.TestCase):
