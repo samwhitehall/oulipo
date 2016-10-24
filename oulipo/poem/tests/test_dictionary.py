@@ -66,6 +66,32 @@ class TestDictionary(unittest.TestCase):
         self.assertEqual(word, 'Butterfly')
 
 
+class TestWordCase(unittest.TestCase):
+    def test_non_lowercase_word_in_dictionary(self):
+        words = [
+            'apple',
+            'Bulgaria',
+            'coal',
+        ]
+        dictionary = AlphabeticalDictionary(words)
+
+        self.assertTrue('bulgaria' in dictionary)
+        self.assertEqual(dictionary.find('bulgaria'), 1)
+        self.assertEqual(dictionary.advance('apple', 1), 'Bulgaria')
+
+    def test_non_lowercase_word_given(self):
+        words = [
+            'apple',
+            'blossom',
+            'coal',
+        ]
+        dictionary = AlphabeticalDictionary(words)
+
+        self.assertTrue('Blossom' in dictionary)
+        self.assertEqual(dictionary.find('Blossom'), 1)
+        self.assertEqual(dictionary.advance('Apple', 1), 'blossom')
+
+
 class TestDictionaryLoader(unittest.TestCase):
     def test_loader(self):
         expected = [

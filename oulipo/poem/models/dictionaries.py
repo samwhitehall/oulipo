@@ -1,6 +1,7 @@
 import math
 import os.path
 import simplejson as json
+import string
 
 from bisect import bisect
 
@@ -10,12 +11,22 @@ from django.conf import settings
 
 class AlphabeticalDictionary:
     def __init__(self, words):
-        self.word_list = sorted(words)
+        normalised = [word.lower() for word in words]
+        assert len(words) == len(set(normalised)), \
+            'Word list contains duplicates'
+
+        self.word_list = sorted(words, key=string.lower)
+        self.word_list_normalised = sorted(normalised)
         self.index = {
             word: index for index, word in enumerate(self.word_list)}
 
+        # also include lower-case variants of words in index
+        for word in words:
+            if word.lower() not in self.index:
+                self.index[word.lower()] = self.index[word]
+
     def __contains__(self, word):
-        return word in self.index
+        return word in self.index or word.lower() in self.index
 
     def __getitem__(self, index):
         if index < 0:
@@ -30,7 +41,10 @@ class AlphabeticalDictionary:
         if word in self.index:
             return self.index[word]
 
-        insert_index = bisect(self.word_list, word)
+        if word.lower() in self.index:
+            return self.index[word.lower()]
+
+        insert_index = bisect(self.word_list_normalised, word.lower())
         return insert_index - 0.5
 
     def advance(self, word, n):
