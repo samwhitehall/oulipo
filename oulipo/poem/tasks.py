@@ -10,7 +10,7 @@ _nlp = {}
 # load nlp corpus on worker initialisation
 def _load_nlp_corpus(**kwargs):
     if not _nlp:
-        _nlp['en'] = spacy.en.English()
+        _nlp['en'] = spacy.load('en')
 
 worker_init.connect(_load_nlp_corpus)
 

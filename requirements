@@ -6,4 +6,4 @@ djangorestframework
 markdown
 mock
 simplejson
-spacy
+spacy==1.1.2
