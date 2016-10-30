@@ -41,6 +41,13 @@ def process_lines(lines):
             if '\n' in token.string:
                 category = 'new_line'
 
+            # stopwords should be classified as 'other'
+            extra_stopwords = [
+                "n't", "'s", "'m",
+            ]
+            if token.is_stop or content.strip() in extra_stopwords:
+                category = 'other'
+
             processed.append((category, content))
 
     return processed
