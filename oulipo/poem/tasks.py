@@ -22,6 +22,7 @@ def process_lines(lines):
 
     parts_of_speech = {
         pos.NOUN: 'noun',
+        pos.PROPN: 'noun',
         pos.VERB: 'verb',
         pos.PUNCT: 'punctuation',
     }
