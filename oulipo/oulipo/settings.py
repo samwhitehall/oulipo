@@ -27,12 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'rest_framework',
 
     'poem',
 ]
 
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,3 +92,8 @@ CELERY_TASK_RESULT_EXPIRES = 30
 
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_RESULT_PERSISTENT = False
+
+# CORS origin settings
+CORS_ORIGIN_WHITELIST = [
+    'localhost:8888',
+]
