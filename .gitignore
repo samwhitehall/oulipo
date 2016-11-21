@@ -30,3 +30,16 @@ oulipo/frontend/oulipo.min.js
 oulipo/frontend/.sass-cache/
 oulipo/frontend/style/main.css
 oulipo/frontend/style/main.css.map
+
+# generated data files
+script/blacklist.json
+script/wordfrequency.info.html
+
+nouns.json
+verbs.json
+
+nns.json
+vbd.json
+vbg.json
+vbn.json
+vbz.json
