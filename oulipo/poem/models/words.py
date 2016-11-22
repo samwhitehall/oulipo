@@ -2,7 +2,7 @@
 import re
 
 
-from poem.common import PARTS_OF_SPEECH
+from poem.common import PARTS_OF_SPEECH, TAGS
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
 
@@ -27,7 +27,7 @@ class Options(object):
 
 
 class Token(object):
-    def __init__(self, category, original_word=None, content=None):
+    def __init__(self, category, original_word=None, content=None, tag=None):
         self.category = category
 
         if content is not None:
@@ -38,6 +38,9 @@ class Token(object):
 
         if category in PARTS_OF_SPEECH and original_word is None:
             self.original_word = self.content
+
+        if tag in TAGS and tag is not None:
+            self.tag = tag
 
     def __repr__(self):
         template = '({self.category})'

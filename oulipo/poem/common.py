@@ -8,3 +8,11 @@ CATEGORIES = PARTS_OF_SPEECH + [
     'new_line',
     'other',
 ]
+
+TAGS = [
+    'NNS',
+    'VBD',
+    'VBG',
+    'VBN',
+    'VBZ',
+]

@@ -2,7 +2,7 @@
 # TODO: deserialization
 from rest_framework import serializers
 
-from poem.common import CATEGORIES
+from poem.common import CATEGORIES, TAGS
 from poem.models.words import Poem
 
 
@@ -12,6 +12,7 @@ class TokenSerializer(serializers.Serializer):
         trim_whitespace=False, allow_blank=True, required=False)
     original_word = serializers.CharField(
         required=False, trim_whitespace=False)
+    tag = serializers.ChoiceField(choices=TAGS, required=False)
 
 
 class OptionsSerializer(serializers.Serializer):
