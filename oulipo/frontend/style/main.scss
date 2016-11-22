@@ -78,10 +78,6 @@ header {
     display: inline;
 }
 
-.token:hover {
-    border-bottom: 1px solid $sub;
-}
-
 #author {
     margin-top: 0.5rem;
     text-align: right;
@@ -90,15 +86,6 @@ header {
 /* styling */
 body {
     background-color: $background;
-    cursor: default;
-
-    // don't allow text selection (it messes up word selection)
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 .dot {

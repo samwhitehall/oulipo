@@ -39,49 +39,8 @@ app.views.TokenView = Backbone.View.extend({
         this.$el.html(this.template(this.model));
         this.$el.addClass(this.model.category);
         return this;
-    },
-    events: {
-        'click': 'select'
-    },
-    select: function(e) {
-        var currentlySelected = (app.poemView.selectedToken === this.model);
-        app.poemView.deselectCurrent();
-
-        if (currentlySelected)
-            return;
-
-        app.poemView.selectedToken = this.model;
-        e.stopPropagation();  // don't bubble to background (and deselect)
-
-        var tray = new app.views.SelectedTokenTrayView({model: this.model});
-        this.$el.append(tray.render().el);
     }
 });
-
-app.views.SelectedTokenTrayView = Backbone.View.extend({
-    tagName: 'span',
-    id: 'tray',
-    template: _.template($('#selected-token-tray-template').html()),
-    render: function() {
-        this.$el.html(this.template(this.model));
-
-        // disable button for current type
-        var elemName = '.' + this.model.category;
-        this.$el.find(elemName).attr('disabled', true);
-
-        // handler for updating component
-        this.$el.find('button').on('click', this.setCategory);
-
-        return this;
-    },
-    setCategory: function(e) {
-        category = e.srcElement.className;
-
-        app.poemView.selectedToken.category = category;
-        app.poem.save();
-    }
-});
-
 app.views.PoemView = Backbone.View.extend({
     el: '#poem-view',
     events: {
@@ -106,14 +65,7 @@ app.views.PoemView = Backbone.View.extend({
 
         this.$('#poem-title').html('<h2>' + app.poem.get('title') + '</h2>');
     },
-    deselectCurrent: function(e) {
-        if (this.selectedToken !== null)
-            $('#tray').remove();
-        
-        this.selectedToken = null;
-    },
     toggleEdit: function(e) {
-        app.poemView.deselectCurrent();
         app.poemView.editMode = !app.poemView.editMode;
 
         if (app.poemView.editMode) {
