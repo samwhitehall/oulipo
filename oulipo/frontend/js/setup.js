@@ -17,14 +17,8 @@ app.optionsView = new app.views.OptionsView({
 app.poem.on('sync', app.poemView.reset, app.poemView);
 app.optionsView.render();
 
-// add de-select handlers to body
-$(document).on('click', function() { app.poemView.deselectCurrent(); }); 
-$(document).on('keypress', function(e) { 
-    if (e.keyCode == 27)  // escape key
-        app.poemView.deselectCurrent(); 
-}); 
-
 // exit edit mode without saving
+$(document).on('click', function() { app.poemView.exitEditMode(); }); 
 $(document).on('keypress', function(e) { 
     if (e.keyCode == 27)  // escape key
         app.poemView.exitEditMode(); 

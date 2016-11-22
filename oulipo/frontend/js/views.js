@@ -69,6 +69,9 @@ app.views.PoemView = Backbone.View.extend({
         app.poemView.editMode = !app.poemView.editMode;
 
         if (app.poemView.editMode) {
+            // don't bubble to document and immediately deselect
+            e.stopPropagation(); 
+
             var height = $('#token-list').height();
 
             var textArea = document.createElement('textarea');
