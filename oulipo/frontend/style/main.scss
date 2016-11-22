@@ -119,6 +119,7 @@ output.verb {
 }
 
 #poem {
+    overflow: hidden;
     border-bottom: 1px solid $subtle-hint;
 
     textarea {
