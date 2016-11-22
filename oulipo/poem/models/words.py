@@ -6,9 +6,16 @@ from poem.common import PARTS_OF_SPEECH, TAGS
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
 
-dictionaries = {
+
+DICTIONARIES = {
     'noun': load('nouns'),
     'verb': load('verbs'),
+
+    'NNS': load('nns'),
+    'VBD': load('vbd'),
+    'VBG': load('vbg'),
+    'VBN': load('vbn'),
+    'VBZ': load('vbz'),
 }
 
 
@@ -68,7 +75,7 @@ class Poem(object):
         else:
             self.tokens = tokenize(raw_text)
 
-        advance_and_replace(self, dictionaries)
+        advance_and_replace(self)
 
 
 def tokenize(raw_text):
@@ -76,13 +83,13 @@ def tokenize(raw_text):
     lines = re.split(r'(\n)', raw_text)
 
     processed = process_lines.delay(lines).get()
-    tokens = [Token(category, content=content)
-              for category, content in processed]
+    tokens = [Token(category, content=content, tag=tag)
+              for content, category, tag in processed]
 
     return tokens
 
 
-def advance_and_replace(poem_model, dictionaries):
+def advance_and_replace(poem_model):
     # TODO: return new object rather than mutating
     advance_by = poem_model.options.advance_by
     if not advance_by:
@@ -93,7 +100,7 @@ def advance_and_replace(poem_model, dictionaries):
     to_replace = [token for token in tokens if token.category in advance_by]
 
     for token in to_replace:
-        dictionary = dictionaries[token.category]
+        dictionary = DICTIONARIES[token.category]
         offset = advance_by[token.category]
         word = token.original_word.strip()
 

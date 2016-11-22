@@ -37,17 +37,18 @@ def process_lines(lines):
         for token in line:
             content = token.string
             category = parts_of_speech.get(token.pos, 'other')
+            tag = token.tag_
 
             if '\n' in token.string:
-                category = 'new_line'
+                category, tag = 'new_line', None
 
             # stopwords should be classified as 'other'
             extra_stopwords = [
                 "n't", "'s", "'m",
             ]
             if token.is_stop or content.strip() in extra_stopwords:
-                category = 'other'
+                category, tag = 'other', None
 
-            processed.append((category, content))
+            processed.append((content, category, tag))
 
     return processed

@@ -4,20 +4,25 @@ import unittest
 from celery import current_app
 from django.conf import settings
 from mock import patch
-import spacy.parts_of_speech as pos
+from spacy.parts_of_speech import NOUN, PART
 
 from poem.tasks import process_lines
 
 
-Token = namedtuple('Token', ['string', 'pos'])
+Token = namedtuple('Token', ['string', 'pos', 'tag_', 'is_stop'])
 
 
 def test_tagger(line, tag=None, parse=None):
-    nouns = {'World', 'Cat', 'Dog'}
+    nouns = {'World', 'Cat', 'Cats', 'Dog'}
+    stopwords = {'and'}
 
     tokens = []
     for word in line.split(' '):
-        token = Token(word, pos.NOUN if word in nouns else pos.PART)
+        pos = NOUN if word in nouns else PART
+        tag = 'NNS' if word.endswith('s') else None
+        stop = word in stopwords
+
+        token = Token(word, pos, tag, stop)
         tokens.append(token)
 
     return tokens
@@ -30,12 +35,12 @@ class TestTokenization(unittest.TestCase):
 
     def test_tokenize(self):
         with patch.dict('poem.tasks._nlp', {'en': test_tagger}):
-            lines = ['hello World and Cat']
+            lines = ['hello World and Cats']
             expected = [
-                ('other', 'hello'),
-                ('noun', 'World'),
-                ('other', 'and'),
-                ('noun', 'Cat'),
+                ('hello', 'other', None),
+                ('World', 'noun', None),
+                ('and', 'other', None),
+                ('Cats', 'noun', 'NNS'),
             ]
             processed = process_lines.delay(lines).get()
 
