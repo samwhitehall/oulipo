@@ -8,9 +8,11 @@ from poem.tasks import process_lines
 
 
 DICTIONARIES = {
-    'noun': load('nouns'),
-    'verb': load('verbs'),
+    'noun': load('nouns', full=True),
+    'verb': load('verbs', full=True),
+}
 
+TRANSFORM_TO = {
     'NNS': load('nns'),
     'VBD': load('vbd'),
     'VBG': load('vbg'),
@@ -105,4 +107,8 @@ def advance_and_replace(poem_model):
         word = token.original_word.strip()
 
         new_word = dictionary.advance(word, offset)
+
+        if hasattr(token, 'tag'):
+            new_word = TRANSFORM_TO[token.tag].get(new_word, new_word)
+
         token.replace_word(new_word)

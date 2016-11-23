@@ -102,6 +102,6 @@ class TestDictionaryLoader(unittest.TestCase):
             'Elephant',
         ]
 
-        dictionary = load('test')
+        dictionary = load('test', full=True)
 
         self.assertEqual(dictionary.word_list, expected)
