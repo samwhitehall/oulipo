@@ -69,9 +69,6 @@ app.views.PoemView = Backbone.View.extend({
         app.poemView.editMode = !app.poemView.editMode;
 
         if (app.poemView.editMode) {
-            // don't bubble to document and immediately deselect
-            e.stopPropagation(); 
-
             var height = $('#token-list').height();
 
             var textArea = document.createElement('textarea');
@@ -86,6 +83,11 @@ app.views.PoemView = Backbone.View.extend({
             titleInput.type = 'text';
             titleInput.value = app.poem.get('title');
             this.$('#poem-title').html(titleInput);
+
+            // don't bubble to document by clicking on title/text/save/edit
+            $(titleInput).click(function(e) { return false; });
+            $(textArea).click(function(e) { return false; });
+            return false;
         }
         else {
             var title = $('#poem-title input').val();
