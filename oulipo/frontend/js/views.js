@@ -96,9 +96,11 @@ app.views.PoemView = Backbone.View.extend({
             app.poem.set('title', title);
             app.poem.set('raw_text', rawText);
             app.poem.unset('tokens');
-            
 
             app.poem.save({wait: true});
+
+            // don't also bubble up and call exitEditMode
+            return false;
         }
     },
     exitEditMode: function(e) {
