@@ -1,13 +1,14 @@
 import unittest
 from mock import patch
 
-from poem.models.dictionaries import load as load_dictionary
+from poem.models.dictionaries import load
 from poem.models.words import (
     Poem,
     Token,
-    advance_and_replace,
-    dictionaries,
+    advance_and_replace
 )
+
+DICTIONARY = load('test', full=True)
 
 
 class TestTokenModel(unittest.TestCase):
@@ -57,7 +58,7 @@ class TestPoemModel(unittest.TestCase):
         poem = Poem(title, raw_text, options)
 
         mock_tokenize.assert_called_with(raw_text)
-        mock_advance.assert_called_with(poem, dictionaries)
+        mock_advance.assert_called_with(poem)
 
     @patch('poem.models.words.advance_and_replace')
     def test_subsequent_already_tokenised(self, mock_advance):
@@ -72,11 +73,12 @@ class TestPoemModel(unittest.TestCase):
 
         poem = Poem(title, raw_text, options, tokens)
 
-        mock_advance.assert_called_with(poem, dictionaries)
+        mock_advance.assert_called_with(poem)
 
 
 class TestAdvanceReplace(unittest.TestCase):
     @patch('poem.models.words.advance_and_replace')
+    @patch.dict('poem.models.words.DICTIONARIES', {'noun': DICTIONARY})
     def test_advance_replace(self, mock_advance):
         title = 'My Wonderful Poem'
         raw_text = 'Cat and Dog'
@@ -90,11 +92,7 @@ class TestAdvanceReplace(unittest.TestCase):
         # don't do advance_and_replace on poem creation (mocked out)
         poem = Poem(title, raw_text, options, tokens)
 
-        test_dictionaries = {
-            'noun': load_dictionary('test'),
-        }
-
-        advance_and_replace(poem, test_dictionaries)
+        advance_and_replace(poem)
 
         self.assertEqual(poem.tokens[0].content, 'Dog')
         self.assertEqual(poem.tokens[1].content, ' and ')

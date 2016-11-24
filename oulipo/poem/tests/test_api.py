@@ -10,13 +10,16 @@ from poem.tests.test_tokenize import test_tagger
 from poem.views import PoemViewSet
 
 
+DICTIONARY = load('test', full=True)
+
+
 class TestApiEndpoint(unittest.TestCase):
     def setUp(self):
         settings.CELERY_ALWAYS_EAGER = True
         current_app.conf.CELERY_ALWAYS_EAGER = True
 
     @patch.dict('poem.tasks._nlp', {'en': test_tagger})
-    @patch.dict('poem.models.words.dictionaries', {'noun': load('test')})
+    @patch.dict('poem.models.words.DICTIONARIES', {'noun': DICTIONARY})
     def test_initial_post(self):
         api = APIRequestFactory()
 
