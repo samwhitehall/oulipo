@@ -22,7 +22,7 @@ app.views.OptionsView = Backbone.View.extend({
         var amount = inputElem.val();
 
         var options = app.poem.get('options');
-        options.set(parameter, amount);
+        options.set(_.escape(parameter), _.escape(amount));
 
         if (amount > 0) {
             amount = '+' + amount;
@@ -63,7 +63,7 @@ app.views.PoemView = Backbone.View.extend({
         tokens = app.poem.get('tokens');
         tokens.forEach(this.addToken, this);
 
-        this.$('#poem-title').html('<h2>' + app.poem.get('title') + '</h2>');
+        this.$('#poem-title').html('<h2>' + app.poem.escape('title') + '</h2>');
     },
     toggleEdit: function(e) {
         app.poemView.editMode = !app.poemView.editMode;
@@ -74,7 +74,7 @@ app.views.PoemView = Backbone.View.extend({
             var textArea = document.createElement('textarea');
             textArea.id = 'raw-text';
             $(textArea).height(height);
-            $(textArea).html(app.poem.get('raw_text'));
+            $(textArea).html(app.poem.escape('raw_text'));
 
             this.$('#token-list').html(textArea);
             this.$('#edit a').html('save');
