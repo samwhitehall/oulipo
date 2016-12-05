@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import unittest
 
 from poem.models.dictionaries import AlphabeticalDictionary, load
@@ -73,6 +75,10 @@ class TestDictionary(unittest.TestCase):
 
         word = self.dictionary.advance('Chimpanzee', -2)
         self.assertEqual(word, 'Butterfly')
+
+    def test_advance_unicode_word(self):
+        word = self.dictionary.advance(u'çat', 1)
+        self.assertEqual(word, 'Dog')
 
 
 class TestWordCase(unittest.TestCase):

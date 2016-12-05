@@ -5,8 +5,8 @@ import string
 
 from bisect import bisect
 
-
 from django.conf import settings
+from unidecode import unidecode
 
 
 class AlphabeticalDictionary:
@@ -38,6 +38,8 @@ class AlphabeticalDictionary:
         return self.word_list[index]
 
     def find(self, word):
+        word = unidecode(unicode(word))
+
         if word in self.index:
             return self.index[word]
 
