@@ -70,11 +70,14 @@ app.views.PoemView = Backbone.View.extend({
 
         if (app.poemView.editMode) {
             var height = $('#token-list').height();
+            if (!height)
+                height = '100px';
 
             var textArea = document.createElement('textarea');
+            var text = app.poem.escape('raw_text');
             textArea.id = 'raw-text';
             $(textArea).height(height);
-            $(textArea).html(app.poem.escape('raw_text'));
+            $(textArea).html(text);
 
             this.$('#token-list').html(textArea);
             this.$('#edit a').html('save');
