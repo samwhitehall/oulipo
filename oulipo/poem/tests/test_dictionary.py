@@ -29,10 +29,12 @@ class TestDictionary(unittest.TestCase):
         self.assertEqual(self.dictionary[50], 'Elephant')  # last item
 
     def test_find(self):
+        self.assertEqual(self.dictionary.find('Aaaaaa'), -0.5)
         self.assertEqual(self.dictionary.find('Cat'), 2)
         self.assertEqual(self.dictionary.find('Catamaran'), 2.5)
         self.assertEqual(self.dictionary.find('Caterpillar'), 2.5)
         self.assertEqual(self.dictionary.find('Dog'), 3)
+        self.assertEqual(self.dictionary.find('Xylophone'), 4.5)
 
     def test_advance_by_zero(self):
         word = self.dictionary.advance('Butterfly', 0)
@@ -51,6 +53,13 @@ class TestDictionary(unittest.TestCase):
 
         under = self.dictionary.advance('Butterfly', -4)
         self.assertEqual(under, 'Aardvark')
+
+    def test_advance_from_outside_range(self):
+        before = self.dictionary.advance('Aaaa', -1)
+        self.assertEqual(before, 'Aaaa')
+
+        minus_one = self.dictionary.advance('Zzzz', 1)
+        self.assertEqual(minus_one, 'Zzzz')
 
     def test_advance_missing_word(self):
         word = self.dictionary.advance('Chimpanzee', 1)

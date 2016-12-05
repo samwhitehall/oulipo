@@ -32,7 +32,7 @@ class AlphabeticalDictionary:
         if index < 0:
             return self.word_list[0]
 
-        if index > len(self.word_list):
+        if index > len(self.word_list) - 1:
             return self.word_list[-1]
 
         return self.word_list[index]
@@ -52,6 +52,15 @@ class AlphabeticalDictionary:
             return word
 
         index = self.find(word)
+
+        # if the initial word is outside of the bounds of the dictionary,
+        # and we are advancing further outside
+        if index < 0 and n < 0:
+            return word
+
+        max_index = len(self.word_list) - 1
+        if index > max_index and n > 0:
+            return word
 
         # if we have a fractional index, advance up and down to nearest
         # integer
