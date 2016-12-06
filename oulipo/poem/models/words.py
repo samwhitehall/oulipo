@@ -1,5 +1,7 @@
 # TODO: add docstrings
+import random
 import re
+import string
 
 
 from poem.common import PARTS_OF_SPEECH, TAGS
@@ -67,7 +69,14 @@ class Token(object):
 
 
 class Poem(object):
-    def __init__(self, title, raw_text, options, tokens=None):
+    def generate_id(self, length=8):
+        return ''.join(
+            random.choice(string.ascii_lowercase + string.digits)
+            for _ in range(length))
+
+    def __init__(self, title, raw_text, options, tokens=None, unique_id=None):
+        self.unique_id = [
+            self.generate_id() if unique_id is None else unique_id]
         self.title = title
         self.raw_text = raw_text
         self.options = Options(**options)

@@ -26,6 +26,7 @@ class PoemModelSerializer(serializers.Serializer):
     raw_text = serializers.CharField(trim_whitespace=False, allow_blank=True)
     options = OptionsSerializer()
     tokens = TokenSerializer(required=False, many=True)
+    unique_id = serializers.CharField(required=False)
     # TODO: add links
 
     def create(self, validated_data):
