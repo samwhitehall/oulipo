@@ -64,6 +64,7 @@ app.views.PoemView = Backbone.View.extend({
         tokens.forEach(this.addToken, this);
 
         this.$('#poem-title').html('<h2>' + app.poem.escape('title') + '</h2>');
+        window.location.hash = app.poem.getURL();
     },
     toggleEdit: function(e) {
         app.poemView.editMode = !app.poemView.editMode;
