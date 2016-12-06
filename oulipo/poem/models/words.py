@@ -69,13 +69,13 @@ class Token(object):
 
 
 class Poem(object):
-    def generate_id(self, length=8):
+    def generate_slug(self):
         return ''.join(
             random.choice(string.ascii_lowercase + string.digits)
-            for _ in range(length))
+            for _ in range(8))
 
-    def __init__(self, title, raw_text, options, tokens=None, unique_id=None):
-        self.unique_id = self.generate_id() if not unique_id else unique_id
+    def __init__(self, title, raw_text, options, tokens=None, slug=None):
+        self.slug = self.generate_slug() if not slug else slug
         self.title = title
         self.raw_text = raw_text
         self.options = Options(**options)

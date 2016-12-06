@@ -21,10 +21,10 @@ app.models.Poem = Backbone.DeepModel.extend({
         tokens: []
     },
     getURL: function() {
-        id = this.get('unique_id');
+        slug = this.get('slug');
         noun = this.get('options').get('advance_by__noun');
         verb = this.get('options').get('advance_by__verb');
 
-        return '#' + id + '/n' + noun + '/v' + verb;
+        return '#' + slug + '/n' + noun + '/v' + verb;
     }
 });
