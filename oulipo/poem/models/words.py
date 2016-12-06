@@ -75,8 +75,8 @@ class Poem(object):
             for _ in range(length))
 
     def __init__(self, title, raw_text, options, tokens=None, unique_id=None):
-        self.unique_id = [
-            self.generate_id() if unique_id is None else unique_id]
+        self.unique_id = (
+            self.generate_id() if unique_id is None else unique_id)
         self.title = title
         self.raw_text = raw_text
         self.options = Options(**options)
