@@ -75,6 +75,19 @@ class TestPoemModel(unittest.TestCase):
 
         mock_advance.assert_called_with(poem)
 
+    @patch('poem.models.words.tokenize')
+    def test_slug_generation(self, mock_tokenize):
+        long_title = Poem(
+            title='This is a poem with a long title', raw_text='', options={})
+        self.assertEqual(
+            long_title.generate_slug(), 'this-is-a-poem-with-a-lo')
+
+        short_title = Poem(
+            title='Short title', raw_text='This is a poem with a short title',
+            options={})
+        self.assertEqual(
+            short_title.generate_slug(), 'short-title-this-is-a-po')
+
 
 class TestAdvanceReplace(unittest.TestCase):
     @patch('poem.models.words.advance_and_replace')
