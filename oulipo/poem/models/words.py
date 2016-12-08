@@ -1,12 +1,11 @@
 # TODO: add docstrings
-import random
 import re
-import string
-
 
 from poem.common import PARTS_OF_SPEECH, TAGS
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
+
+from django.utils.text import slugify
 
 
 DICTIONARIES = {
@@ -69,16 +68,24 @@ class Token(object):
 
 
 class Poem(object):
-    def generate_slug(self):
-        return ''.join(
-            random.choice(string.ascii_lowercase + string.digits)
-            for _ in range(8))
+    def generate_slug(self, max_length=24):
+        # TODO: include options for duplicates once we have persistence
+        title_slug = slugify(self.title)
+        text_slug = slugify(self.raw_text)
+
+        if len(title_slug) > max_length:
+            slug = title_slug
+        else:
+            slug = (title_slug + '-' + text_slug)
+
+        slug = slug[:max_length].rstrip('-')
+        return slug
 
     def __init__(self, title, raw_text, options, tokens=None, slug=None):
-        self.slug = self.generate_slug() if not slug else slug
         self.title = title
         self.raw_text = raw_text
         self.options = Options(**options)
+        self.slug = self.generate_slug() if not slug else slug
 
         if tokens:
             self.tokens = [Token(**token) for token in tokens]
