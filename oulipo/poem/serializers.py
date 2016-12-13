@@ -30,4 +30,6 @@ class PoemModelSerializer(serializers.Serializer):
     # TODO: add links
 
     def create(self, validated_data):
-        return Poem(**validated_data)
+        poem = Poem.create(**validated_data)
+        poem.save()
+        return poem

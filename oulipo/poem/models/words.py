@@ -5,6 +5,7 @@ from poem.common import PARTS_OF_SPEECH, TAGS
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
 
+from django.db import models
 from django.utils.text import slugify
 
 
@@ -67,11 +68,40 @@ class Token(object):
         self.content = self.original_word.replace(original, new_word)
 
 
-class Poem(object):
-    def generate_slug(self, max_length=24):
+class Poem(models.Model):
+    title = models.CharField(max_length=100, blank=True, default='')
+    raw_text = models.TextField()
+    slug = models.SlugField(primary_key=True)
+    options = Options()
+    tokens = []
+
+    @classmethod
+    def create(cls, title, raw_text, options, tokens=None, slug=''):
+        options = Options(**options)
+
+        if tokens:
+            tokens = [Token(**token) for token in tokens]
+        else:
+            tokens = tokenize(raw_text)
+
+        poem = None
+        try:
+            poem = Poem.objects.get(slug=slug, raw_text=raw_text)
+        except Poem.DoesNotExist:
+            slug = Poem.generate_slug(title, raw_text)
+            poem = cls(title=title, raw_text=raw_text, slug=slug)
+
+        poem.options = options
+        poem.tokens = tokens
+
+        advance_and_replace(poem)
+        return poem
+
+    @classmethod
+    def generate_slug(self, title, raw_text, max_length=24):
         # TODO: include options for duplicates once we have persistence
-        title_slug = slugify(self.title)
-        text_slug = slugify(self.raw_text)
+        title_slug = slugify(title)
+        text_slug = slugify(raw_text)
 
         if len(title_slug) > max_length:
             slug = title_slug
@@ -80,19 +110,6 @@ class Poem(object):
 
         slug = slug[:max_length].rstrip('-')
         return slug
-
-    def __init__(self, title, raw_text, options, tokens=None, slug=None):
-        self.title = title
-        self.raw_text = raw_text
-        self.options = Options(**options)
-        self.slug = self.generate_slug() if not slug else slug
-
-        if tokens:
-            self.tokens = [Token(**token) for token in tokens]
-        else:
-            self.tokens = tokenize(raw_text)
-
-        advance_and_replace(self)
 
 
 def tokenize(raw_text):
