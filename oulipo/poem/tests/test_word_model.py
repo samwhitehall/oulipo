@@ -55,7 +55,7 @@ class TestPoemModel(unittest.TestCase):
         raw_text = 'Hello world.'
         options = {}
 
-        poem = Poem(title, raw_text, options)
+        poem = Poem.create(title, raw_text, options)
 
         mock_tokenize.assert_called_with(raw_text)
         mock_advance.assert_called_with(poem)
@@ -71,22 +71,20 @@ class TestPoemModel(unittest.TestCase):
             {'category': 'punctuation', 'content': '.'},
         ]
 
-        poem = Poem(title, raw_text, options, tokens)
+        poem = Poem.create(title, raw_text, options, tokens)
 
         mock_advance.assert_called_with(poem)
 
     @patch('poem.models.words.tokenize')
     def test_slug_generation(self, mock_tokenize):
-        long_title = Poem(
-            title='This is a poem with a long title', raw_text='', options={})
-        self.assertEqual(
-            long_title.generate_slug(), 'this-is-a-poem-with-a-lo')
+        long_title = 'This is a poem with a long title'
+        self.assertEqual(Poem.generate_slug(long_title, ''),
+                         'this-is-a-poem-with-a-lo')
 
-        short_title = Poem(
-            title='Short title', raw_text='This is a poem with a short title',
-            options={})
-        self.assertEqual(
-            short_title.generate_slug(), 'short-title-this-is-a-po')
+        short_title = 'Short title'
+        text = 'This is a poem with a short title'
+        self.assertEqual(Poem.generate_slug(short_title, text),
+                         'short-title-this-is-a-po')
 
 
 class TestAdvanceReplace(unittest.TestCase):
@@ -103,7 +101,7 @@ class TestAdvanceReplace(unittest.TestCase):
         options = {'advance_by__noun': 1}
 
         # don't do advance_and_replace on poem creation (mocked out)
-        poem = Poem(title, raw_text, options, tokens)
+        poem = Poem.create(title, raw_text, options, tokens)
 
         advance_and_replace(poem)
 
