@@ -86,7 +86,7 @@ class Poem(models.Model):
 
         poem = None
         try:
-            poem = Poem.objects.get(slug=slug, raw_text=raw_text)
+            poem = Poem.objects.get(slug=slug, raw_text=raw_text, title=title)
         except Poem.DoesNotExist:
             slug = Poem.generate_slug(title, raw_text)
             poem = cls(title=title, raw_text=raw_text, slug=slug)
