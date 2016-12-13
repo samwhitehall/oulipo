@@ -31,5 +31,5 @@ class PoemModelSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         poem = Poem.create(**validated_data)
-        poem.save()
+        # poem.save()
         return poem

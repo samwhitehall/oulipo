@@ -1,4 +1,5 @@
 # TODO: add docstrings
+import itertools
 import re
 
 from poem.common import PARTS_OF_SPEECH, TAGS
@@ -84,10 +85,8 @@ class Poem(models.Model):
         else:
             tokens = tokenize(raw_text)
 
-        poem = None
-        try:
-            poem = Poem.objects.get(slug=slug, raw_text=raw_text, title=title)
-        except Poem.DoesNotExist:
+        poem = Poem.objects.filter(slug=slug, raw_text=raw_text, title=title)
+        if not poem.exists():
             slug = Poem.generate_slug(title, raw_text)
             poem = cls(title=title, raw_text=raw_text, slug=slug)
 
@@ -99,7 +98,6 @@ class Poem(models.Model):
 
     @classmethod
     def generate_slug(self, title, raw_text, max_length=24):
-        # TODO: include options for duplicates once we have persistence
         title_slug = slugify(title)
         text_slug = slugify(raw_text)
 
@@ -109,7 +107,15 @@ class Poem(models.Model):
             slug = (title_slug + '-' + text_slug)
 
         slug = slug[:max_length].rstrip('-')
-        return slug
+
+        # if the slug already exists, randomise until we find a unique slug
+        new_slug = slug
+        for count in itertools.count(1):
+            if not Poem.objects.filter(slug=new_slug).exists():
+                break
+            new_slug = slug + '-' + str(count)
+
+        return new_slug
 
 
 def tokenize(raw_text):
