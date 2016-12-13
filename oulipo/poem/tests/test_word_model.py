@@ -1,4 +1,5 @@
 import unittest
+from django.test import TestCase as DjangoTestCase
 from mock import patch
 
 from poem.models.dictionaries import load
@@ -108,3 +109,47 @@ class TestAdvanceReplace(unittest.TestCase):
         self.assertEqual(poem.tokens[0].content, 'Dog')
         self.assertEqual(poem.tokens[1].content, ' and ')
         self.assertEqual(poem.tokens[2].content, 'Elephant')
+
+
+class TestPoemModelPersistence(DjangoTestCase):
+    def setUp(self):
+        self.initial_poem = Poem.create('My Wonderful Poem', 'Cat and Dog', {})
+        self.initial_poem.save()
+
+    def test_persist(self):
+        poems = Poem.objects.all()
+        self.assertEqual(len(poems), 1)
+        self.assertEqual(poems[0].slug, 'my-wonderful-poem-cat-an')
+
+    def test_generate_new_slug_empty(self):
+        poem = Poem.create('My Excellent Poem', 'Cat and Dog', {})
+        poem.save()
+
+        poems = Poem.objects.all()
+        self.assertEqual(len(poems), 2)
+        self.assertEqual(poems[1].slug, 'my-excellent-poem-cat-an')
+
+    def test_generate_new_slug_different(self):
+        old_slug = 'my-wonderful-poem-cat-an'
+        poem = Poem.create('My Excellent Poem', 'Cat and Dog', {},
+                           slug=old_slug)
+        poem.save()
+
+        poems = Poem.objects.all()
+        self.assertEqual(len(poems), 2)
+        self.assertEqual(poems[1].slug, 'my-excellent-poem-cat-an')
+
+    def test_generate_new_slug_duplicate(self):
+        poem = Poem.create('My Wonderful Poem', 'Cat and Elephant', {})
+        poem.save()
+
+        poems = Poem.objects.all()
+        self.assertEqual(len(poems), 2)
+        self.assertEqual(poems[1].slug, 'my-wonderful-poem-cat-an-1')
+
+        poem = Poem.create('My Wonderful Poem', 'Cat and Frog', {})
+        poem.save()
+
+        poems = Poem.objects.all()
+        self.assertEqual(len(poems), 3)
+        self.assertEqual(poems[2].slug, 'my-wonderful-poem-cat-an-2')
