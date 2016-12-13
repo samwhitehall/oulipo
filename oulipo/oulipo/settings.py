@@ -63,6 +63,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wsgi.application'
 
 
+# Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'oulipo.sqlite',
+    }
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 

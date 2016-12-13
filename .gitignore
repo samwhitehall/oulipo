@@ -1,5 +1,6 @@
 # vim
 *.un~
+*.swo
 *.swp
 *~
 
@@ -43,3 +44,6 @@ vbd.json
 vbg.json
 vbn.json
 vbz.json
+
+# test sqlite databases
+oulipo/oulipo.sqlite
