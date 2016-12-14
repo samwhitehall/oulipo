@@ -1,7 +1,7 @@
 var AppRouter = Backbone.Router.extend({
     routes: {
         '': 'home',
-        'p:id/n:noun/v:verb': 'view'
+        'poem/:id/n:noun/v:verb': 'view'
     },
     home: function() {
         app.poem = new app.models.Poem({
@@ -12,17 +12,26 @@ var AppRouter = Backbone.Router.extend({
             },
             'raw_text': 'Just type your initial poem, in here, click save'
         });
+        app.poem.save();
     },
     view: function(id, noun, verb) {
-        console.log(id);
+        app.poem = new app.models.Poem({
+            'slug': id,
+            'options': {
+                'advance_by__verb': noun,    
+                'advance_by__noun': verb    
+            },
+        });
+        app.poem.fetch();
     }
 });
 
 $(document).ready(function() {
     var router = new AppRouter();
-    Backbone.history.start();
 
     app.poemView = new app.views.PoemView();
+    Backbone.history.start();
+
     app.optionsView = new app.views.OptionsView({
         model: app.poem.get('options')
     });
@@ -36,6 +45,4 @@ $(document).ready(function() {
         if (e.keyCode == 27)  // escape key
             app.poemView.exitEditMode(); 
     }); 
-
-    app.poem.save();
 });

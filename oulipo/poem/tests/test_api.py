@@ -52,3 +52,5 @@ class TestApiEndpoint(unittest.TestCase):
 
         self.assertEqual(response.data['tokens'][1]['original_word'], 'Cat')
         self.assertEqual(response.data['tokens'][-1]['original_word'], 'Dog')
+
+    # TODO: test retrieval path
