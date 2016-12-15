@@ -85,12 +85,16 @@ class Poem(models.Model):
         else:
             tokens = tokenize(raw_text)
 
-        poem = Poem.objects.filter(slug=slug, raw_text=raw_text, title=title)
+        poem = Poem.objects.filter(slug=slug)
         if poem.exists():
             poem = poem[0]
         else:
-            slug = Poem.generate_slug(title, raw_text)
-            poem = cls(title=title, raw_text=raw_text, slug=slug)
+            filtered = Poem.objects.filter(raw_text=raw_text, title=title)
+            if filtered.exists():
+                poem = filtered[0]
+            else:
+                slug = Poem.generate_slug(title, raw_text)
+                poem = cls(title=title, raw_text=raw_text, slug=slug)
 
         poem.options = options
         poem.tokens = tokens

@@ -28,6 +28,6 @@ class PoemViewSet(ViewSet):
         saved_poem = get_object_or_404(queryset, slug=pk)
 
         # TODO: get options from URL
-        poem = Poem.create(saved_poem.title, saved_poem.raw_text, {})
+        poem = Poem.create(saved_poem.title, saved_poem.raw_text, {}, slug=pk)
         serializer = PoemModelSerializer(poem)
         return Response(serializer.data)
