@@ -1,8 +1,8 @@
-from rest_framework import routers
+from django.conf.urls import url
 
-from poem.views import PoemViewSet
+from poem.views import create, view
 
-router = routers.SimpleRouter()
-router.register(r'poem', PoemViewSet, base_name='poem')
-
-urlpatterns = router.urls
+urlpatterns = [
+    url(r'poem/$', create),
+    url(r'poem/(?P<slug>[-\w]+)/$', view),
+]
