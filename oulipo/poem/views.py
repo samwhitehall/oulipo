@@ -8,8 +8,8 @@ from poem.models.words import Poem
 from poem.serializers import PoemModelSerializer
 
 
-@api_view(['POST'])
-def create(request):
+# TODO: rename this
+def create_body(request):
     serializer = PoemModelSerializer(data=request.data)
     if serializer.is_valid():
         poem_model = serializer.save()
@@ -23,8 +23,12 @@ def create(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-def view(request, slug=None):
+@api_view(['POST'])
+def create(request):
+    return create_body
+
+
+def retrieve(request, slug):
     queryset = Poem.objects.all()
     saved_poem = get_object_or_404(queryset, slug=slug)
 
@@ -32,3 +36,18 @@ def view(request, slug=None):
     poem = Poem.create(saved_poem.title, saved_poem.raw_text, {}, slug=slug)
     serializer = PoemModelSerializer(poem)
     return Response(serializer.data)
+
+
+def update(request, slug):
+    response = create_body(request)
+    return response
+
+
+@api_view(['GET', 'PUT'])
+def poem_view(request, slug):
+    handler = {
+        'GET': retrieve,
+        'PUT': update,
+    }
+
+    return handler[request.method](request, slug)

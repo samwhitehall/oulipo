@@ -58,7 +58,6 @@ app.views.PoemView = Backbone.View.extend({
         $tokenListEl.html(cleanedHTML);
     },
     reset: function() {
-        console.log('reset');
         this.$('#edit a').html('edit');
         this.$('#token-list').html('');
         tokens = app.poem.get('tokens');
