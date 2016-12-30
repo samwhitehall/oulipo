@@ -107,9 +107,10 @@ app.views.PoemView = Backbone.View.extend({
         }
     },
     exitEditMode: function(e) {
-        if (app.poemView.editMode)
+        if (app.poemView.editMode) {
             app.poemView.editMode = false;
             app.poemView.reset();
+        }
     }
 });
 
