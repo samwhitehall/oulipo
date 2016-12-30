@@ -1,7 +1,7 @@
 var AppRouter = Backbone.Router.extend({
     routes: {
         '': 'home',
-        'poem/:id/n:noun/v:verb': 'view'
+        'poem/:id/n:noun/v:verb/': 'view'
     },
     home: function() {
         app.poem = new app.models.Poem({
