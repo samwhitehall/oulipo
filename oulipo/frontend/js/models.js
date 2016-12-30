@@ -13,13 +13,13 @@ app.models.Token = Backbone.Model.extend({
 });
 
 app.models.Poem = Backbone.DeepModel.extend({
+    urlRoot: 'http://localhost:8000/poem/',
     url: function() {
-        base = 'http://localhost:8000/poem/';
+        var url = Backbone.Model.prototype.url.call(this);
+        if (!url.endsWith('/'))
+            url += '/';
 
-        if (this.get('slug'))
-            base += this.get('slug') + '/';
-
-        return base;
+        return url;
     },
     idAttribute: 'slug',
     defaults: {
@@ -33,6 +33,6 @@ app.models.Poem = Backbone.DeepModel.extend({
         noun = this.get('options').get('advance_by__noun');
         verb = this.get('options').get('advance_by__verb');
 
-        return '#poem/' + slug + '/n' + noun + '/v' + verb + '/';
+        return '#poem/' + slug + '/n' + noun + '/v' + verb;
     }
 });
