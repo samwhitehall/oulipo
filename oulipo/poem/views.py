@@ -25,7 +25,7 @@ def create_body(request):
 
 @api_view(['POST'])
 def create(request):
-    return create_body
+    return create_body(request)
 
 
 def retrieve(request, slug):
