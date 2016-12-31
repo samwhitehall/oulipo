@@ -12,7 +12,11 @@ app.views.OptionsView = Backbone.View.extend({
         this.setAdvanceBy(e.target.id);
 
         app.poem.save(app.poem.toJSON(), {
-            wait: true
+            wait: true,
+            success: function(model, response) {
+                console.log(response);
+                app.poemView.reset();
+            },
         });
     },
     setAdvanceBy: function(parameter) {
@@ -58,6 +62,8 @@ app.views.PoemView = Backbone.View.extend({
         $tokenListEl.html(cleanedHTML);
     },
     reset: function() {
+        console.log('reset >' + app.poem.get('slug'));
+
         this.$('#edit a').html('edit');
         this.$('#token-list').html('');
         tokens = app.poem.get('tokens');

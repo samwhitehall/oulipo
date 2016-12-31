@@ -13,15 +13,16 @@ app.models.Token = Backbone.Model.extend({
 });
 
 app.models.Poem = Backbone.DeepModel.extend({
-    urlRoot: 'http://localhost:8000/poem/',
     url: function() {
-        var url = Backbone.Model.prototype.url.call(this);
-        if (!url.endsWith('/'))
-            url += '/';
+        root = 'http://localhost:8000/poem/';
+        slug = this.get('slug');
 
-        return url;
+        if (slug)
+            return root + slug + '/';
+
+        return root;
     },
-    idAttribute: 'slug',
+    //idAttribute: 'slug',
     defaults: {
         title: '',
         raw_text: '',

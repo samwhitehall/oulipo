@@ -1,7 +1,7 @@
 var AppRouter = Backbone.Router.extend({
     routes: {
         '': 'home',
-        'poem/:id/n:noun/v:verb': 'view'
+        'poem/:slug/n:noun/v:verb': 'view'
     },
     home: function() {
         app.poem = new app.models.Poem({
@@ -14,9 +14,9 @@ var AppRouter = Backbone.Router.extend({
         });
         app.poem.save();
     },
-    view: function(id, noun, verb) {
+    view: function(slug, noun, verb) {
         app.poem = new app.models.Poem({
-            'slug': id,
+            'slug': slug,
             'options': {
                 'advance_by__verb': noun,    
                 'advance_by__noun': verb    
@@ -37,7 +37,6 @@ $(document).ready(function() {
     });
 
     app.poem.on('sync', app.poemView.reset, app.poemView);
-    app.optionsView.render();
 
     // exit edit mode without saving
     $(document).on('click', function() { app.poemView.exitEditMode(); }); 
@@ -45,4 +44,6 @@ $(document).ready(function() {
         if (e.keyCode == 27)  // escape key
             app.poemView.exitEditMode(); 
     }); 
+
+    app.optionsView.render();
 });

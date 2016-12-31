@@ -40,14 +40,15 @@ def retrieve(request, slug):
 
 def update(request, slug):
     response = create_body(request)
+    print response.data.get('slug')
     return response
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'POST'])
 def poem_view(request, slug):
     handler = {
         'GET': retrieve,
-        'PUT': update,
+        'POST': update,
     }
 
     return handler[request.method](request, slug)
