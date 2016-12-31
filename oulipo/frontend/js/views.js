@@ -86,15 +86,22 @@ app.views.PoemView = Backbone.View.extend({
             return false;
         }
         else {
+            var oldText = app.poem.get('raw_text');
             var title = $('#poem-title input').val();
             var rawText = $('#raw-text').val();
 
             app.poem.set('title', title);
-            app.poem.set('raw_text', rawText);
-            app.poem.unset('tokens');
+
+            if (rawText != oldText) {
+                app.poem.set('raw_text', rawText);
+                app.poem.unset('tokens');
+
+                var options = app.poem.get('options');
+                options.set('advance_by__noun', 0);
+                options.set('advance_by__verb', 0);
+            }
 
             app.poem.save({wait: true});
-
             app.optionsView.render();
             
             // don't also bubble up and call exitEditMode
@@ -105,6 +112,7 @@ app.views.PoemView = Backbone.View.extend({
         if (app.poemView.editMode) {
             app.poemView.editMode = false;
             app.poemView.reset();
+            app.optionsView.render();
         }
     }
 });
