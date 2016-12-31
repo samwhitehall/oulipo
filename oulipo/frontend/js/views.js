@@ -2,7 +2,10 @@ app.views.OptionsView = Backbone.View.extend({
     el: '#options',
     template: _.template($('#options-template').html()),
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+        var context = this.model.toJSON();
+        context.disabled = app.poemView.editMode;
+
+        this.$el.html(this.template(context));
         return this;
     },
     events: {
@@ -12,11 +15,10 @@ app.views.OptionsView = Backbone.View.extend({
         var options = app.poem.get('options');
         options.set(_.escape(e.target.id), _.escape(e.target.value));
 
+        app.optionsView.render();
         app.poem.save(app.poem.toJSON(), {
             wait: true
         });
-
-        app.optionsView.render();
     }
 });
 
@@ -79,6 +81,8 @@ app.views.PoemView = Backbone.View.extend({
             // don't bubble to document by clicking on title/text/save/edit
             $(titleInput).click(function(e) { return false; });
             $(textArea).click(function(e) { return false; });
+
+            app.optionsView.render();
             return false;
         }
         else {
@@ -91,6 +95,8 @@ app.views.PoemView = Backbone.View.extend({
 
             app.poem.save({wait: true});
 
+            app.optionsView.render();
+            
             // don't also bubble up and call exitEditMode
             return false;
         }
