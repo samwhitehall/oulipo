@@ -9,25 +9,14 @@ app.views.OptionsView = Backbone.View.extend({
         'input input[type="range"]': 'update'
     },
     update: function(e) {
-        this.setAdvanceBy(e.target.id);
+        var options = app.poem.get('options');
+        options.set(_.escape(e.target.id), _.escape(e.target.value));
 
         app.poem.save(app.poem.toJSON(), {
             wait: true
         });
-    },
-    setAdvanceBy: function(parameter) {
-        var inputElem = this.$('#' + parameter);
-        var outputElem = inputElem.prev('output');
 
-        var amount = inputElem.val();
-
-        var options = app.poem.get('options');
-        options.set(_.escape(parameter), _.escape(amount));
-
-        if (amount > 0) {
-            amount = '+' + amount;
-        }
-        outputElem.text(amount);
+        app.optionsView.render();
     }
 });
 
