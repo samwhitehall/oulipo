@@ -7,11 +7,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
 DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['oulipo.samwhitehall.com']
 
 # Application definition
 
@@ -87,9 +85,7 @@ CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_RESULT_PERSISTENT = False
 
 # CORS origin settings
-CORS_ORIGIN_WHITELIST = [
-    'localhost:8888',
-]
+CORS_ORIGIN_WHITELIST = ['oulipo.samwhitehall.com']
 
 # Import secrets
 from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
@@ -98,3 +94,5 @@ from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
 # Overwrite some variables for development
 if os.environ.get('DEVELOPMENT'):
     DEBUG = True
+    ALLOWED_HOSTS = []  # default to localhost
+    CORS_ORIGIN_WHITELIST = ['localhost']
