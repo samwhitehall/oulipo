@@ -8,8 +8,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -94,3 +93,8 @@ CORS_ORIGIN_WHITELIST = [
 
 # Import secrets
 from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
+
+
+# Overwrite some variables for development
+if os.environ.get('DEVELOPMENT'):
+    DEBUG = True
