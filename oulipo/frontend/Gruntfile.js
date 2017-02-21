@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                     'js/views.js', 
                     'js/setup.js'
                 ],
-                dest: 'oulipo.js'
+                dest: 'oulipo.prod.js'
             },
             dev: {
                 src: [
@@ -40,6 +40,12 @@ module.exports = function(grunt) {
                     'js/setup.js'
                 ],
                 dest: 'oulipo.js'
+            }
+        },
+
+        uglify: {
+            my_target: {
+                files: {'oulipo.js': ['oulipo.prod.js']}
             }
         },
 
@@ -69,10 +75,11 @@ module.exports = function(grunt) {
     // load grunt plugins
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // register tasks
-    grunt.registerTask('default', ['jshint', 'concat:prod', 'sass']);
+    grunt.registerTask('default', ['concat:prod', 'uglify', 'sass']);
 };
