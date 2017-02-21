@@ -13,16 +13,28 @@ module.exports = function(grunt) {
 
         // js minification & concatenation
         concat: {
-            options: {
-                banner: '/* <%= pkg.name %> v<%= pkg.version %> by <%= pkg.author %> */\n'
-            },
-            build: {
+            prod: {
                 src: [
                     'js/vendor/jquery.*.js', 
                     'js/vendor/underscore.*.js', 
                     'js/vendor/backbone.*.js', 
                     'js/vendor/backbone-deep-model.*.js', 
                     'js/app.js', 
+                    'js/config.prod.js', 
+                    'js/models.js', 
+                    'js/views.js', 
+                    'js/setup.js'
+                ],
+                dest: 'oulipo.js'
+            },
+            dev: {
+                src: [
+                    'js/vendor/jquery.*.js', 
+                    'js/vendor/underscore.*.js', 
+                    'js/vendor/backbone.*.js', 
+                    'js/vendor/backbone-deep-model.*.js', 
+                    'js/app.js', 
+                    'js/config.dev.js', 
                     'js/models.js', 
                     'js/views.js', 
                     'js/setup.js'
@@ -42,7 +54,7 @@ module.exports = function(grunt) {
         watch: {
             script: {
                 files: 'js/**/*.js',
-                tasks: ['jshint', 'concat']
+                tasks: ['jshint', 'concat:dev']
             },
             css: {
                 files: 'style/**/*.scss',
@@ -62,5 +74,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // register tasks
-    grunt.registerTask('default', ['jshint', 'concat', 'sass']);
+    grunt.registerTask('default', ['jshint', 'concat:prod', 'sass']);
 };
