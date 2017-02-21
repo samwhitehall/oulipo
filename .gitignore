@@ -43,3 +43,6 @@ vbd.json
 vbg.json
 vbn.json
 vbz.json
+
+# secrets file
+oulipo/oulipo/secrets.py

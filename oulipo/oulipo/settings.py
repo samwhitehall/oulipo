@@ -8,12 +8,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z8e%s8mvcnn8l$i%^enm-!kkk3xjh=x19)y_k9kula7f3&t&t9'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -97,3 +91,6 @@ CELERY_RESULT_PERSISTENT = False
 CORS_ORIGIN_WHITELIST = [
     'localhost:8888',
 ]
+
+# Import secrets
+from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
