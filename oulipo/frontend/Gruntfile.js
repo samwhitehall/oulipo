@@ -48,8 +48,10 @@ module.exports = function(grunt) {
                 files: 'style/**/*.scss',
                 tasks: ['sass']
             }
-        }
+        },
 
+        // remove generated files
+        clean: ['oulipo.js', 'style/main.css']
     });
 
     // load grunt plugins
@@ -57,6 +59,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // register tasks
     grunt.registerTask('default', ['jshint', 'concat']);
