@@ -83,9 +83,14 @@ app.views.PoemView = Backbone.View.extend({
             this.$('#token-list').html(textArea);
             this.$('#edit a').html('save');
 
+            var headerWidth = $('#poem-title h2').width();
+            var editButtonWidth = $('h3#edit').width();
+            var newWidth = headerWidth - editButtonWidth - 12;
+
             var titleInput = document.createElement('input');
             titleInput.type = 'text';
             titleInput.value = app.poem.get('title');
+            titleInput.style.width = newWidth + 'px';
             this.$('#poem-title').html(titleInput);
 
             // don't bubble to document by clicking on title/text/save/edit

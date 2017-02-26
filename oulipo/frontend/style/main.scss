@@ -53,14 +53,12 @@ header {
     margin-top: -6px;
     margin-left: -1px;
 
-    max-width: $width - $edit-width - (2 * $border);
-
     border: 1px solid $subtle-hint;
     color: $body;
 }
 
 #edit {
-    max-width: $edit-width;
+    width: $edit-width;
     float: right;
     text-align: right;
 }
