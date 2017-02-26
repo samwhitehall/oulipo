@@ -93,6 +93,7 @@ from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
 
 # Overwrite some variables for development
 if os.environ.get('DEVELOPMENT'):
+    print "---DEVELOPMENT MODE---"
     DEBUG = True
     ALLOWED_HOSTS = []  # default to localhost
-    CORS_ORIGIN_WHITELIST = ['localhost']
+    CORS_ORIGIN_WHITELIST = ['localhost:8888']
