@@ -29,6 +29,8 @@ app.views.OptionsView = Backbone.View.extend({
         });
         app.optionsView.updateLabel('noun');
         app.optionsView.updateLabel('verb');
+    },
+    reset: function() {
     }
 });
 
@@ -93,11 +95,14 @@ app.views.PoemView = Backbone.View.extend({
             titleInput.style.width = newWidth + 'px';
             this.$('#poem-title').html(titleInput);
 
+            // reset options
+            app.poem.get('options').reset();
+            app.optionsView.render();
+
             // don't bubble to document by clicking on title/text/save/edit
             $(titleInput).click(function(e) { return false; });
             $(textArea).click(function(e) { return false; });
 
-            app.optionsView.render();
             return false;
         }
         else {
@@ -110,10 +115,6 @@ app.views.PoemView = Backbone.View.extend({
             if (rawText != oldText) {
                 app.poem.set('raw_text', rawText);
                 app.poem.unset('tokens');
-
-                var options = app.poem.get('options');
-                options.set('advance_by__noun', 0);
-                options.set('advance_by__verb', 0);
             }
 
             app.poem.save({wait: true});
