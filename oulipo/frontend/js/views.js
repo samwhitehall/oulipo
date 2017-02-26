@@ -6,19 +6,29 @@ app.views.OptionsView = Backbone.View.extend({
         context.disabled = app.poemView.editMode;
 
         this.$el.html(this.template(context));
+        this.updateLabel('noun');
+        this.updateLabel('verb');
         return this;
     },
     events: {
         'input input[type="range"]': 'update'
     },
+    updateLabel: function(pos) {
+        var elem = $('output.' + pos);
+        var value = this.model.get('advance_by__' + pos);
+        var sign = value > 0 ? '+' : '';
+
+        elem.html(sign + value);
+    },
     update: function(e) {
         var options = app.poem.get('options');
         options.set(_.escape(e.target.id), _.escape(e.target.value));
 
-        app.optionsView.render();
         app.poem.save(app.poem.toJSON(), {
             wait: true
         });
+        app.optionsView.updateLabel('noun');
+        app.optionsView.updateLabel('verb');
     }
 });
 
