@@ -148,8 +148,9 @@ output.verb {
     color: $highlight-other;
 }
 
-.new_line {
-    display: block;
+.new_line:after {
+    content: "\a";
+    white-space: pre;
 }
 
 a:link.edit-button, a:visited.edit-button {
