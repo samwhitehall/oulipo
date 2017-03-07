@@ -18,7 +18,7 @@ worker_init.connect(_load_nlp_corpus)
 @shared_task
 def process_lines(lines):
     if not _nlp:
-        raise Exception('corpus not initialised')
+        raise Exception('Corpus not initialised.')
 
     parts_of_speech = {
         pos.NOUN: 'noun',

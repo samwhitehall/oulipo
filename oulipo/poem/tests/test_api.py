@@ -66,3 +66,17 @@ class TestApiEndpoint(unittest.TestCase):
             'options': [u'This field is required.'], 
             'title': [u'This field is required.']
         })
+
+    def test_server_error(self):
+        api = APIRequestFactory()
+        view = PoemViewSet.as_view({'post': 'create'})
+
+        request = api.post('/poems/', {
+            'title': '',
+            'raw_text': 'hello world',
+            'options': {},
+        }, format='json')
+        response = view(request)
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.data['errors'], ['Corpus not initialised.'])
