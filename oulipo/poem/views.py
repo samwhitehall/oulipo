@@ -17,5 +17,7 @@ class PoemViewSet(ViewSet):
             return Response(update_serializer.data)
 
         else:
-            # TODO: return more than bare status code
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            data = {
+                'errors': serializer.errors,
+            }
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)

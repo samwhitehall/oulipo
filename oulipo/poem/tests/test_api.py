@@ -52,3 +52,17 @@ class TestApiEndpoint(unittest.TestCase):
 
         self.assertEqual(response.data['tokens'][1]['original_word'], 'Cat')
         self.assertEqual(response.data['tokens'][-1]['original_word'], 'Dog')
+
+    def test_validation(self):
+        api = APIRequestFactory()
+        view = PoemViewSet.as_view({'post': 'create'})
+
+        request = api.post('/poems/', {}, format='json')
+        response = view(request)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['errors'], {
+            'raw_text': [u'This field is required.'], 
+            'options': [u'This field is required.'], 
+            'title': [u'This field is required.']
+        })
