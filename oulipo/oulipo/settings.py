@@ -84,6 +84,8 @@ CELERY_TASK_RESULT_EXPIRES = 30
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_RESULT_PERSISTENT = False
 
+CELERY_TIMEOUT = 5
+
 # CORS origin settings
 CORS_ORIGIN_WHITELIST = ['oulipo.samwhitehall.com']
 

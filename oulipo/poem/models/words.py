@@ -1,8 +1,10 @@
 # TODO: add docstrings
 import re
 
+from celery.exceptions import TimeoutError
+from django.conf import settings
 
-from poem.common import PARTS_OF_SPEECH, TAGS
+from poem.common import PARTS_OF_SPEECH, TAGS, ServerException
 from poem.models.dictionaries import load
 from poem.tasks import process_lines
 
@@ -84,7 +86,13 @@ def tokenize(raw_text):
     raw_text = unicode(raw_text)
     lines = re.split(r'(\n)', raw_text)
 
-    processed = process_lines.delay(lines).get()
+    try:
+        processed = process_lines\
+                .delay(lines)\
+                .get(timeout=settings.CELERY_TIMEOUT)
+    except TimeoutError:
+        raise ServerException('Request timed out.')
+
     tokens = [Token(category, content=content, tag=tag)
               for content, category, tag in processed]
 
