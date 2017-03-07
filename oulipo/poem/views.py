@@ -5,6 +5,7 @@ from rest_framework.status import (
 )
 from rest_framework.viewsets import ViewSet
 
+from poem.common import ServerException
 from poem.serializers import PoemModelSerializer
 
 
@@ -16,7 +17,7 @@ class PoemViewSet(ViewSet):
         if serializer.is_valid():
             try:
                 poem_model = serializer.save()
-            except Exception as e:
+            except ServerException as e:
                 data = {'errors': [e.message]}
                 return Response(data, status=HTTP_500_INTERNAL_SERVER_ERROR) 
 

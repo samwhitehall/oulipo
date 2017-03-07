@@ -16,3 +16,7 @@ TAGS = [
     'VBN',
     'VBZ',
 ]
+
+
+class ServerException(Exception):
+    pass

@@ -4,6 +4,8 @@ import spacy.parts_of_speech as pos
 from celery import shared_task
 from celery.signals import worker_init
 
+from poem.common import ServerException
+
 _nlp = {}
 
 
@@ -18,7 +20,7 @@ worker_init.connect(_load_nlp_corpus)
 @shared_task
 def process_lines(lines):
     if not _nlp:
-        raise Exception('Corpus not initialised.')
+        raise ServerException('Corpus not initialised.')
 
     parts_of_speech = {
         pos.NOUN: 'noun',
