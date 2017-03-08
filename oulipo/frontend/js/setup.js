@@ -35,8 +35,14 @@ app.poem.get('options').set('advance_by__noun', 1);
 app.poem.get('options').set('advance_by__verb', -3);
 
 // hide/show spinner depending on if loading
-app.poem.on('request', function() { $('#spinner').show(); });
-app.poem.on('sync',    function() { $('#spinner').hide(); });
+var timer = null;
+app.poem.on('request', function() { 
+    timer = window.setTimeout(function() { $('#spinner').fadeIn(100); }, 500);
+});
+app.poem.on('sync', function() { 
+    $('#spinner').fadeOut(100);
+    window.clearTimeout(timer);
+});
 
 app.poem.on('sync', app.poemView.reset, app.poemView);
 app.optionsView.render();
