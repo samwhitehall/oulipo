@@ -36,12 +36,18 @@ app.poem.get('options').set('advance_by__verb', -3);
 
 // hide/show spinner depending on if loading
 var timer = null;
+var ongoingRequests = 0;
 app.poem.on('request', function() { 
-    timer = window.setTimeout(function() { $('#spinner').fadeIn(100); }, 500);
+    if (ongoingRequests === 0)
+        timer = window.setTimeout(function() { $('#spinner').show(); }, 200);
+    ongoingRequests += 1;
 });
 app.poem.on('sync', function() { 
-    $('#spinner').fadeOut(100);
-    window.clearTimeout(timer);
+    ongoingRequests -= 1;
+    if (ongoingRequests === 0) {
+        $('#spinner').hide();
+        window.clearTimeout(timer);
+    }
 });
 
 app.poem.on('sync', app.poemView.reset, app.poemView);
