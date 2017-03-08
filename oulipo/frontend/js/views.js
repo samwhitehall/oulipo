@@ -105,6 +105,7 @@ app.views.PoemView = Backbone.View.extend({
             return false;
         }
         else {
+            $('input textarea').prop('disabled', true);
             var oldText = app.poem.get('raw_text');
             var title = $('#poem-title input').val();
             var rawText = $('#raw-text').val();
