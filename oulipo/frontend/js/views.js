@@ -24,9 +24,8 @@ app.views.OptionsView = Backbone.View.extend({
         var options = app.poem.get('options');
         options.set(_.escape(e.target.id), _.escape(e.target.value));
 
-        app.poem.save(app.poem.toJSON(), {
-            wait: true
-        });
+        app.poem.save(app.poem.toJSON(), 
+            {wait: true}).error(app.poemView.displayError);
         app.optionsView.updateLabel('noun');
         app.optionsView.updateLabel('verb');
     },
@@ -117,7 +116,8 @@ app.views.PoemView = Backbone.View.extend({
                 app.poem.unset('tokens');
             }
 
-            app.poem.save({wait: true});
+            app.poem.save(app.poem.toJSON(), 
+                {wait: true}).error(app.poemView.displayError);
             app.optionsView.render();
             
             // don't also bubble up and call exitEditMode
@@ -130,6 +130,9 @@ app.views.PoemView = Backbone.View.extend({
             app.poemView.reset();
             app.optionsView.render();
         }
+    },
+    displayError: function(error) {
+        console.log(error.status + ": " + error.responseText);
     }
 });
 
