@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.status import (
-    HTTP_400_BAD_REQUEST, 
+    HTTP_400_BAD_REQUEST,
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 from rest_framework.viewsets import ViewSet
@@ -19,8 +19,9 @@ class PoemViewSet(ViewSet):
                 poem_model = serializer.save()
             except ServerException as e:
                 data = {'errors': [e.message]}
-                return Response(data, status=HTTP_500_INTERNAL_SERVER_ERROR) 
+                return Response(data, status=HTTP_500_INTERNAL_SERVER_ERROR)
 
+            # TODO: do we need this?
             update_serializer = PoemModelSerializer(poem_model)
             return Response(update_serializer.data)
 

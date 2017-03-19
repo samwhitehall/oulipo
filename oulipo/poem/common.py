@@ -17,6 +17,8 @@ TAGS = [
     'VBZ',
 ]
 
+OFFSETS = range(-10, 11)
+
 
 class ServerException(Exception):
     pass
