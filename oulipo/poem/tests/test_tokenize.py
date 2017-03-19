@@ -13,7 +13,7 @@ Token = namedtuple('Token', ['string', 'pos', 'tag_', 'is_stop'])
 
 
 def test_tagger(line, tag=None, parse=None):
-    nouns = {'World', 'Cat', 'Cats', 'Dog'}
+    nouns = {'World', 'Cat', 'Cats', 'Dog', 'Macaque'}
     stopwords = {'and'}
 
     tokens = []
@@ -22,7 +22,7 @@ def test_tagger(line, tag=None, parse=None):
         tag = 'NNS' if word.endswith('s') else None
         stop = word in stopwords
 
-        token = Token(word, pos, tag, stop)
+        token = Token(word + ' ', pos, tag, stop)
         tokens.append(token)
 
     return tokens
@@ -37,10 +37,10 @@ class TestTokenization(unittest.TestCase):
         with patch.dict('poem.tasks._nlp', {'en': test_tagger}):
             lines = ['hello World and Cats']
             expected = [
-                ('hello', 'other', None),
-                ('World', 'noun', None),
-                ('and', 'other', None),
-                ('Cats', 'noun', 'NNS'),
+                ('hello ', 'other', None),
+                ('World ', 'noun', None),
+                ('and ', 'other', None),
+                ('Cats ', 'noun', 'NNS'),
             ]
             processed = process_lines.delay(lines).get()
 

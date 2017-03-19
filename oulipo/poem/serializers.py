@@ -11,12 +11,6 @@ class TokenSerializer(serializers.Serializer):
     offsets = serializers.DictField(
         child=serializers.CharField(), required=False)
 
-    def validate(self, data):
-        if data['category'] == 'new_line' and '\n' not in data['content']:
-            raise serializers.ValidationError('Inconsistent newline.')
-
-        return data
-
 
 class PoemModelSerializer(serializers.Serializer):
     title = serializers.CharField(

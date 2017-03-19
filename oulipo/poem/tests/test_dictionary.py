@@ -119,4 +119,4 @@ class TestDictionaryLoader(unittest.TestCase):
 
         dictionary = load('test', full=True)
 
-        self.assertEqual(dictionary.word_list, expected)
+        self.assertEqual(dictionary.word_list[:5], expected)

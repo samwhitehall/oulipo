@@ -23,15 +23,11 @@ class TestApiEndpoint(unittest.TestCase):
     def test_initial_post(self):
         api = APIRequestFactory()
 
-        text = 'hello Cat i am a Dog'
-        options = {
-            'advance_by__noun': 1,
-        }
+        text = 'I am' + '\n' + 'a Macaque'
 
         request = api.post('/poems/', {
-            'title': 'my brilliant poem',
+            'title': 'My Brilliant Poem',
             'raw_text': text,
-            'options': options,
         }, format='json')
 
         view = PoemViewSet.as_view({'post': 'create'})
@@ -40,18 +36,57 @@ class TestApiEndpoint(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(response.data['raw_text'], text)
-        self.assertEqual(response.data['options'], {
-            'advance_by__noun': 1,
-            'advance_by__verb': 0,  # not specified => default to 0
-        })
 
-        expected_new_text = 'hello Dog i am a Elephant'.replace(' ', '')
-        new_text = ''.join(token['content']
-                           for token in response.data['tokens'])
-        self.assertEqual(new_text, expected_new_text)
-
-        self.assertEqual(response.data['tokens'][1]['original_word'], 'Cat')
-        self.assertEqual(response.data['tokens'][-1]['original_word'], 'Dog')
+        # one big expected value
+        self.assertEqual(response.data['tokens'], [
+            {
+                'original_word': 'I ',
+                'category': 'other',
+                'offsets': {}
+            },
+            {
+                'original_word': 'am ',
+                'category': 'other',
+                'offsets': {}
+            },
+            {
+                'original_word': '\n ',
+                'category': 'new_line',
+                'offsets': {}
+            },
+            {
+                'original_word': 'a ',
+                'category': 'other',
+                'offsets': {}
+            },
+            {
+                'original_word': 'Macaque ',
+                'category': 'noun',
+                'offsets': {
+                    '-10': 'Dog ',
+                    '-9': 'Elephant ',
+                    '-8': 'Frog ',
+                    '-7': 'Gorilla ',
+                    '-6': 'Hummingbird ',
+                    '-5': 'Ibis ',
+                    '-4': 'Jackal ',
+                    '-3': 'Kingfisher ',
+                    '-2': 'Lemur ',
+                    '-1': 'Macacque ',
+                    '0': 'Macaque ',
+                    '1': 'Narwhal ',
+                    '2': 'Octopus ',
+                    '3': 'Penguin ',
+                    '4': 'Quokka ',
+                    '5': 'Rabbit ',
+                    '6': 'Spider ',
+                    '7': 'Tiger ',
+                    '8': 'Unicorn ',
+                    '9': 'Unicorn ',
+                    '10': 'Unicorn '
+                 }
+            }
+        ])
 
     def test_validation(self):
         api = APIRequestFactory()
@@ -62,8 +97,7 @@ class TestApiEndpoint(unittest.TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data['errors'], {
-            'raw_text': [u'This field is required.'], 
-            'options': [u'This field is required.'], 
+            'raw_text': [u'This field is required.'],
             'title': [u'This field is required.']
         })
 
@@ -74,7 +108,6 @@ class TestApiEndpoint(unittest.TestCase):
         request = api.post('/poems/', {
             'title': '',
             'raw_text': 'hello world',
-            'options': {},
         }, format='json')
         response = view(request)
 
