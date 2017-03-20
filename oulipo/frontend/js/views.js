@@ -26,8 +26,6 @@ app.views.OptionsView = Backbone.View.extend({
         app.optionsView.updateLabel('noun');
         app.optionsView.updateLabel('verb');
     },
-    reset: function() {
-    }
 });
 
 app.views.TokenView = Backbone.View.extend({
@@ -95,7 +93,7 @@ app.views.PoemView = Backbone.View.extend({
             this.$('#poem-title').html(titleInput);
 
             // reset options
-            app.options.reset();
+            app.options.resetSilently();
             app.optionsView.render();
 
             // don't bubble to document by clicking on title/text/save/edit
@@ -136,4 +134,3 @@ app.views.PoemView = Backbone.View.extend({
         console.log(error.status + ": " + error.responseText);
     }
 });
-

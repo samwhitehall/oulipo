@@ -3,9 +3,9 @@ app.models.Options = Backbone.Model.extend({
         advance_by__noun: 0,
         advance_by__verb: 0
     },
-    reset: function() {
-        this.set('advance_by__noun', 0);
-        this.set('advance_by__verb', 0);
+    resetSilently: function() {
+        this.set('advance_by__noun', 0, {silent: true});
+        this.set('advance_by__verb', 0, {silent: true});
     },
 });
 
