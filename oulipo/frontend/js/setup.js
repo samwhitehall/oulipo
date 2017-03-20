@@ -24,15 +24,13 @@ app.poem = new app.models.Poem({
                 'I took the one less traveled by,\n' + 
                 'And that has made all the difference.'
 });
-
-app.poemView = new app.views.PoemView();
-app.optionsView = new app.views.OptionsView({
-    model: app.poem.get('options')
+app.options = new app.models.Options({
+    'advance_by__noun': 1,
+    'advance_by__verb': -3,
 });
 
-// set default advance_by (noun: -2, verb: 3)
-app.poem.get('options').set('advance_by__noun', 1);
-app.poem.get('options').set('advance_by__verb', -3);
+app.poemView = new app.views.PoemView();
+app.optionsView = new app.views.OptionsView({model: app.options});
 
 // hide/show spinner depending on if loading
 var timer = null;
@@ -51,6 +49,7 @@ app.poem.on('sync', function() {
 });
 
 app.poem.on('sync', app.poemView.reset, app.poemView);
+app.options.on('change', app.poemView.reset, app.poemView);
 app.optionsView.render();
 
 // exit edit mode without saving

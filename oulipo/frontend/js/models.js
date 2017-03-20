@@ -6,13 +6,14 @@ app.models.Options = Backbone.Model.extend({
     reset: function() {
         this.set('advance_by__noun', 0);
         this.set('advance_by__verb', 0);
-    }
+    },
 });
 
 app.models.Token = Backbone.Model.extend({
     defaults: {
-        content: '',
-        category: 'other'
+        original_word: '',
+        category: 'other',
+        offset: ''
     }
 });
 
@@ -21,7 +22,6 @@ app.models.Poem = Backbone.DeepModel.extend({
     defaults: {
         title: '',
         raw_text: '',
-        options: new app.models.Options(),
         tokens: []
     }
 });

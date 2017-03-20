@@ -15,17 +15,14 @@ app.views.OptionsView = Backbone.View.extend({
     },
     updateLabel: function(pos) {
         var elem = $('output.' + pos);
-        var value = this.model.get('advance_by__' + pos);
+        var value = app.options.get('advance_by__' + pos);
         var sign = value > 0 ? '+' : '';
 
         elem.html(sign + value);
     },
     update: function(e) {
-        var options = app.poem.get('options');
-        options.set(_.escape(e.target.id), _.escape(e.target.value));
+        app.options.set(_.escape(e.target.id), _.escape(e.target.value));
 
-        app.poem.save(app.poem.toJSON(), 
-            {wait: true}).error(app.poemView.displayError);
         app.optionsView.updateLabel('noun');
         app.optionsView.updateLabel('verb');
     },
@@ -38,6 +35,9 @@ app.views.TokenView = Backbone.View.extend({
     className: 'token',
     template: _.template($('#token-template').html()),
     render: function() {
+        var offset = app.options.get('advance_by__' + this.model.category);
+        this.model.new_word = this.model.offsets[offset] || this.model.original_word;
+
         this.$el.html(this.template(this.model));
         this.$el.addClass(this.model.category);
         return this;
@@ -95,7 +95,7 @@ app.views.PoemView = Backbone.View.extend({
             this.$('#poem-title').html(titleInput);
 
             // reset options
-            app.poem.get('options').reset();
+            app.options.reset();
             app.optionsView.render();
 
             // don't bubble to document by clicking on title/text/save/edit
