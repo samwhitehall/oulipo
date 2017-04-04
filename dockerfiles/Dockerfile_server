@@ -1,0 +1,47 @@
+FROM python:2.7
+MAINTAINER Sam Whitehall <me@samwhitehall.com>
+
+ENV INSTALL_PATH /oulipo
+
+RUN mkdir -p $INSTALL_PATH
+WORKDIR $INSTALL_PATH
+
+RUN apt-get update
+
+
+# Install supervisor, nginx & uwsgi
+RUN apt-get install -y supervisor
+RUN apt-get install -y nginx
+RUN pip install uwsgi
+
+
+# Install API requirements
+COPY requirements requirements
+RUN pip install -r requirements
+
+
+# Configure nginx, uwsgi & supervisor
+COPY config/supervisor.conf /etc/supervisor/conf.d/
+COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/uwsgi.ini /etc/uwsgi/
+
+
+# Install frontend dependencies & compile
+RUN apt-get install -y ruby-full
+RUN gem install sass
+
+RUN apt-get install -y npm
+RUN apt-get install -y nodejs
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+
+RUN npm install -g grunt-cli
+
+COPY oulipo $INSTALL_PATH
+WORKDIR $INSTALL_PATH/frontend
+RUN npm install --save-dev
+RUN grunt
+
+
+# Run nginx & uwsgi through supervisor
+WORKDIR $INSTALL_PATH
+CMD supervisord -n -c /etc/supervisor/conf.d/supervisor.conf

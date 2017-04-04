@@ -19,17 +19,17 @@ __pycache__/
 
 # other directories
 env
+logs
 scratch
 
 
 # frontend
 oulipo/frontend/node_modules
 oulipo/frontend/oulipo.js
-oulipo/frontend/oulipo.prod.js
 
 oulipo/frontend/.sass-cache/
-oulipo/frontend/style/main.css
-oulipo/frontend/style/main.css.map
+oulipo/frontend/style.css
+oulipo/frontend/style.css.map
 
 # generated data files
 script/blacklist.json

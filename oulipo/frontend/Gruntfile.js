@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                     'js/views.js', 
                     'js/setup.js'
                 ],
-                dest: 'oulipo.prod.js'
+                dest: 'oulipo.js'
             },
             dev: {
                 src: [
@@ -45,14 +45,14 @@ module.exports = function(grunt) {
 
         uglify: {
             my_target: {
-                files: {'oulipo.js': ['oulipo.prod.js']}
+                files: {'oulipo.js': ['oulipo.js']}
             }
         },
 
         // sass compilation
         sass: {
             dist: {
-                files: {'style/main.css': 'style/main.scss'}
+                files: {'style.css': 'style/main.scss'}
             }
         },
         
@@ -65,6 +65,9 @@ module.exports = function(grunt) {
             css: {
                 files: 'style/**/*.scss',
                 tasks: ['sass']
+            },
+            options: {
+                atBegin: true
             }
         },
 

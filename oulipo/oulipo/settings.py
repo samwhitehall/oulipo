@@ -4,6 +4,8 @@ Django settings for oulipo project.
 
 import os
 
+from oulipo.secrets import SECRET_KEY
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -74,7 +76,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Celery settings
-BROKER_URL = 'amqp://'
+BROKER_URL = 'amqp://guest:guest@rabbitmq'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
@@ -89,13 +91,10 @@ CELERY_TIMEOUT = 5
 # CORS origin settings
 CORS_ORIGIN_WHITELIST = ['oulipo.samwhitehall.com']
 
-# Import secrets
-from oulipo.secrets import (SECRET_KEY, RABBIT_PASSWORD)
-
 
 # Overwrite some variables for development
 if os.environ.get('DEVELOPMENT'):
     print "---DEVELOPMENT MODE---"
     DEBUG = True
-    ALLOWED_HOSTS = []  # default to localhost
-    CORS_ORIGIN_WHITELIST = ['localhost:8888']
+    ALLOWED_HOSTS = ['*']
+    CORS_ORIGIN_ALLOW_ALL = True

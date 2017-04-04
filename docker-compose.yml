@@ -1,27 +1,56 @@
 version: '2'
+    
 services:
     dev:
-        image: python:2.7
-        volumes:
-            - ./oulipo/frontend:/html
-        working_dir: /html
-        command: "python -m SimpleHTTPServer 8888"    
-        ports:
-            - "8888:8888"
-        depends_on:
-            - api
-    api:
-        build: .
-        command: "python manage.py runserver 0.0.0.0:8000"
-        ports:
-            - "8000:8000"
-        depends_on:
-            - celery
-    celery:
-        build: .
-        image: celery:3.1
-        command: "celery -A oulipo worker --loglevel=info"
+        build:
+            context: .
+            dockerfile: dockerfiles/Dockerfile_server
         links:
             - rabbitmq:rabbitmq
+        depends_on:
+            - worker
+        volumes:
+            - ./oulipo:/oulipo
+            - ./logs:/logs
+        ports:
+            - "80:80"
+            - "8000:8000"
+        environment:
+            DEVELOPMENT: "true"
+
+    prod:
+        build:
+            context: .
+            dockerfile: dockerfiles/Dockerfile_server
+        links:
+            - rabbitmq:rabbitmq
+        depends_on:
+            - worker
+        volumes:
+            - ./logs:/logs
+        ports:
+            - "80:80"
+            - "8000:8000"
+
+    tests:
+        build:
+            context: .
+            dockerfile: dockerfiles/Dockerfile_worker
+        volumes:
+            - ./oulipo:/oulipo
+        command: python manage.py test
+
+    worker:
+        build:
+            context: .
+            dockerfile: dockerfiles/Dockerfile_worker
+        links:
+            - rabbitmq:rabbitmq
+        depends_on:
+            - rabbitmq
+        volumes:
+            - ./oulipo:/oulipo
+
     rabbitmq:
-        image: rabbitmq:3.6
+        hostname: rabbitmq
+        image: rabbitmq:3

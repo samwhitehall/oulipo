@@ -6,13 +6,15 @@ ENV INSTALL_PATH /oulipo
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
 
-# Install requirements including spacy English corpus (~500MB)
+
+# Install requirements & spaCy english corpus
 COPY requirements requirements
 RUN pip install -r requirements
 RUN python -m spacy.en.download
 
-COPY ./oulipo .
-
-# Don't run as the default superuser (celery isn't happy doing this)
+# Don't run as root
 RUN useradd -ms /bin/bash oulipo
 USER oulipo
+
+
+CMD celery -A oulipo worker --loglevel=info
