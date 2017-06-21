@@ -3,8 +3,9 @@ Django settings for oulipo project.
 """
 
 import os
+import string
 
-from oulipo.secrets import SECRET_KEY
+from django.utils.crypto import get_random_string
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -54,6 +55,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'wsgi.application'
+
+# Secret key (we can just generate a new one on startup, as there's no
+# persistence!)
+SECRET_KEY = get_random_string()
 
 
 # Internationalization

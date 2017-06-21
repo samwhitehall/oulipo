@@ -18,6 +18,5 @@ This project uses Docker (hooray!), so the setup should be easy.
 
 
 #### Notes
-* Include `SECRET_KEY` in `oulipo/oulipo/secrets.py`.
 * Include dictionary JSON files in `oulipo/poem/data` (see `scripts/` for how these are generated).
 * Run `grunt watch` in `oulipo/frontend` for dev.
